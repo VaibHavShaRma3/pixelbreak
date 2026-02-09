@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Search, User } from "lucide-react";
+import { ArrowLeft, BookOpen, Search, User } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { Input } from "@/components/ui/input";
@@ -99,6 +99,14 @@ export default function BlogPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
+      <Link
+        href="/"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Home
+      </Link>
+
       {/* Header */}
       <ScrollReveal direction="down">
         <div className="flex items-center gap-3">

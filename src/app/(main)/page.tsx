@@ -25,7 +25,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-neon-yellow" />
             <span className="text-sm text-neon-yellow">
-              18 games. Zero installs.
+              19 games. Zero installs.
             </span>
           </div>
         </ScrollReveal>
@@ -118,7 +118,7 @@ export default function HomePage() {
           {[
             {
               label: "Games",
-              value: 18,
+              value: 19,
               icon: Gamepad2,
               color: "text-neon-cyan",
               glowColor: "#00fff5",

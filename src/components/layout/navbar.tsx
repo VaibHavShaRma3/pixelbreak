@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Gamepad2, BookOpen, Trophy, User, Menu, X, Volume2, VolumeX, Sun, Moon } from "lucide-react";
+import { Gamepad2, BookOpen, Trophy, User, Menu, X, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,6 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [soundOn, setSoundOn] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -84,19 +83,6 @@ export function Navbar() {
               <Sun className="h-4 w-4" />
             ) : (
               <Moon className="h-4 w-4" />
-            )}
-          </button>
-
-          {/* Sound toggle */}
-          <button
-            onClick={() => setSoundOn(!soundOn)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
-            title={soundOn ? "Mute sounds" : "Enable sounds"}
-          >
-            {soundOn ? (
-              <Volume2 className="h-4 w-4" />
-            ) : (
-              <VolumeX className="h-4 w-4" />
             )}
           </button>
 

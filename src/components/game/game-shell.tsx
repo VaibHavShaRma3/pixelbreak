@@ -154,16 +154,21 @@ export function GameShell({ config, children }: GameShellProps) {
 
             {/* How to Play instructions */}
             {config.howToPlay && config.howToPlay.length > 0 && (
-              <div className="w-full max-w-md rounded-lg border border-border bg-surface-2 p-4">
-                <div className="mb-2 flex items-center gap-2 text-sm font-semibold" style={{ color: config.color }}>
-                  <BookOpen className="h-4 w-4" />
+              <div className="w-full max-w-lg rounded-xl border border-border bg-surface-2 p-5">
+                <div className="mb-3 flex items-center gap-2 text-base font-bold" style={{ color: config.color }}>
+                  <BookOpen className="h-5 w-5" />
                   How to Play
                 </div>
-                <ul className="space-y-1">
+                <ul className="space-y-2.5">
                   {config.howToPlay.map((step, i) => (
-                    <li key={i} className="flex gap-2 text-xs text-muted">
-                      <span className="font-mono font-bold" style={{ color: config.color }}>{i + 1}.</span>
-                      <span>{step}</span>
+                    <li key={i} className="flex gap-3 text-sm leading-relaxed text-foreground/80">
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-background"
+                        style={{ backgroundColor: config.color }}
+                      >
+                        {i + 1}
+                      </span>
+                      <span className="pt-0.5">{step}</span>
                     </li>
                   ))}
                 </ul>
