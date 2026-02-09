@@ -10,6 +10,12 @@ const gameComponents: Record<string, React.ComponentType<any>> = {
   "color-match": dynamic(() => import("@/games/color-match"), { ssr: false }),
   stack: dynamic(() => import("@/games/stack"), { ssr: false }),
   "sudoku-lite": dynamic(() => import("@/games/sudoku-lite"), { ssr: false }),
+  "daily-pixel-puzzle": dynamic(() => import("@/games/daily-pixel-puzzle"), { ssr: false }),
+  "lo-fi-typer": dynamic(() => import("@/games/lo-fi-typer"), { ssr: false }),
+  "falling-sand": dynamic(() => import("@/games/falling-sand"), { ssr: false }),
+  "syntax-breaker": dynamic(() => import("@/games/syntax-breaker"), { ssr: false }),
+  "constellation-hunter": dynamic(() => import("@/games/constellation-hunter"), { ssr: false }),
+  "gacha-capsule": dynamic(() => import("@/games/gacha-capsule"), { ssr: false }),
 };
 
 interface GameLoaderProps {

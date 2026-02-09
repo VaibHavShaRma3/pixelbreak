@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getGameBySlug, gameRegistry } from "@/lib/game-registry";
 import { GameLoader } from "@/components/game/game-loader";
 import { LeaderboardPanel } from "@/components/leaderboard/leaderboard-panel";
+import { ReviewPanel } from "@/components/reviews/review-panel";
 
 export async function generateStaticParams() {
   return gameRegistry.filter((g) => g.enabled).map((g) => ({ slug: g.slug }));
@@ -39,6 +40,10 @@ export default async function GamePage({
         {/* Game area */}
         <div>
           <GameLoader config={config} />
+          {/* Reviews below the game */}
+          <div className="mt-8">
+            <ReviewPanel gameSlug={slug} />
+          </div>
         </div>
 
         {/* Sidebar: Leaderboard */}

@@ -82,7 +82,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "easy",
     tags: ["daily", "pixel-art", "guessing"],
-    enabled: false,
+    enabled: true,
   },
   {
     slug: "lo-fi-typer",
@@ -98,7 +98,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "2-5 min",
     difficulty: "medium",
     tags: ["typing", "music", "chill"],
-    enabled: false,
+    enabled: true,
   },
   {
     slug: "falling-sand",
@@ -114,7 +114,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["sandbox", "physics", "creative"],
-    enabled: false,
+    enabled: true,
   },
   {
     slug: "syntax-breaker",
@@ -130,7 +130,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "hard",
     tags: ["coding", "debugging", "speed"],
-    enabled: false,
+    enabled: true,
   },
   {
     slug: "constellation-hunter",
@@ -146,7 +146,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "medium",
     tags: ["stars", "patterns", "spatial"],
-    enabled: false,
+    enabled: true,
   },
   {
     slug: "gacha-capsule",
@@ -162,7 +162,7 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["collecting", "luck", "gacha"],
-    enabled: false,
+    enabled: true,
   },
 
   // ─── Phase 5: Remaining 8 Games ───

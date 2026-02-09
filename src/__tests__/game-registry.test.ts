@@ -11,14 +11,20 @@ describe("Game Registry", () => {
     expect(gameRegistry.length).toBe(18);
   });
 
-  it("should have 4 enabled MVP games", () => {
+  it("should have 10 enabled games (Phase 1 + Phase 3)", () => {
     const enabled = getEnabledGames();
-    expect(enabled.length).toBe(4);
+    expect(enabled.length).toBe(10);
     expect(enabled.map((g) => g.slug).sort()).toEqual([
       "bubble-wrap",
       "color-match",
+      "constellation-hunter",
+      "daily-pixel-puzzle",
+      "falling-sand",
+      "gacha-capsule",
+      "lo-fi-typer",
       "stack",
       "sudoku-lite",
+      "syntax-breaker",
     ]);
   });
 
