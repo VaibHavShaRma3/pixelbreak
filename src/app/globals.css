@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Press Start 2P";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2")
+    format("woff2");
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #e0e0e8;
+  --neon-cyan: #00fff5;
+  --neon-pink: #ff2d95;
+  --neon-green: #39ff14;
+  --neon-purple: #b026ff;
+  --neon-yellow: #ffe600;
+  --surface: #12121a;
+  --surface-2: #1a1a26;
+  --border: #2a2a3a;
+  --muted: #6b6b80;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-green: var(--neon-green);
+  --color-neon-purple: var(--neon-purple);
+  --color-neon-yellow: var(--neon-yellow);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-pixel: "Press Start 2P", monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Neon glow utilities */
+.glow-cyan {
+  text-shadow: 0 0 7px var(--neon-cyan), 0 0 10px var(--neon-cyan),
+    0 0 21px var(--neon-cyan);
+}
+
+.glow-pink {
+  text-shadow: 0 0 7px var(--neon-pink), 0 0 10px var(--neon-pink),
+    0 0 21px var(--neon-pink);
+}
+
+.glow-green {
+  text-shadow: 0 0 7px var(--neon-green), 0 0 10px var(--neon-green),
+    0 0 21px var(--neon-green);
+}
+
+.border-glow-cyan {
+  box-shadow: 0 0 5px var(--neon-cyan), inset 0 0 5px rgba(0, 255, 245, 0.1);
+}
+
+.border-glow-pink {
+  box-shadow: 0 0 5px var(--neon-pink), inset 0 0 5px rgba(255, 45, 149, 0.1);
+}
+
+.border-glow-green {
+  box-shadow: 0 0 5px var(--neon-green), inset 0 0 5px rgba(57, 255, 20, 0.1);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Game canvas reset */
+canvas {
+  display: block;
 }
