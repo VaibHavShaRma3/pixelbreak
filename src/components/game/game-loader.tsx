@@ -16,6 +16,14 @@ const gameComponents: Record<string, React.ComponentType<any>> = {
   "syntax-breaker": dynamic(() => import("@/games/syntax-breaker"), { ssr: false }),
   "constellation-hunter": dynamic(() => import("@/games/constellation-hunter"), { ssr: false }),
   "gacha-capsule": dynamic(() => import("@/games/gacha-capsule"), { ssr: false }),
+  "workspace-pet": dynamic(() => import("@/games/workspace-pet"), { ssr: false }),
+  "neon-rhythm": dynamic(() => import("@/games/neon-rhythm"), { ssr: false }),
+  "hexagon-land": dynamic(() => import("@/games/hexagon-land"), { ssr: false }),
+  "one-minute-barista": dynamic(() => import("@/games/one-minute-barista"), { ssr: false }),
+  "zen-garden": dynamic(() => import("@/games/zen-garden"), { ssr: false }),
+  "focus-forest": dynamic(() => import("@/games/focus-forest"), { ssr: false }),
+  "magnetic-poetry": dynamic(() => import("@/games/magnetic-poetry"), { ssr: false }),
+  "community-grid": dynamic(() => import("@/games/community-grid"), { ssr: false }),
 };
 
 interface GameLoaderProps {

@@ -16,6 +16,12 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "1-3 min",
     difficulty: "easy",
     tags: ["relaxing", "clicker", "satisfying"],
+    howToPlay: [
+      "Click or tap any bubble to pop it",
+      "Each pop earns 1 point",
+      "Pop all bubbles to regenerate a fresh grid",
+      "No time limit — just relax and pop!",
+    ],
     enabled: true,
   },
   {
@@ -32,6 +38,12 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "2-5 min",
     difficulty: "medium",
     tags: ["brain", "speed", "colors"],
+    howToPlay: [
+      "A color name appears at the top in a misleading color",
+      "Click the swatch that matches the WORD, not the text color",
+      "Answer quickly for bonus points",
+      "Wrong answers lose points — accuracy matters!",
+    ],
     enabled: true,
   },
   {
@@ -48,6 +60,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "2-5 min",
     difficulty: "medium",
     tags: ["timing", "precision", "arcade"],
+    howToPlay: [
+      "A block slides back and forth across the screen",
+      "Click or press Space to drop it",
+      "Only the overlapping portion stays — misalignment shrinks the platform",
+      "Miss completely and it's game over",
+      "Speed increases as you stack higher",
+    ],
     enabled: true,
   },
   {
@@ -64,10 +83,17 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-10 min",
     difficulty: "medium",
     tags: ["logic", "numbers", "puzzle"],
+    howToPlay: [
+      "Fill in the empty cells with numbers 1-4",
+      "Each row must contain 1, 2, 3, and 4",
+      "Each column must contain 1, 2, 3, and 4",
+      "Each 2x2 box must contain 1, 2, 3, and 4",
+      "Complete the grid as fast as possible — time is your score!",
+    ],
     enabled: true,
   },
 
-  // ─── Phase 3: 6 More Games (disabled until implemented) ───
+  // ─── Phase 3: 6 More Games ───
   {
     slug: "daily-pixel-puzzle",
     title: "Daily Pixel Puzzle",
@@ -82,6 +108,12 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "easy",
     tags: ["daily", "pixel-art", "guessing"],
+    howToPlay: [
+      "Click tiles on the 8x8 grid to reveal hidden pixel art",
+      "Try to guess the image with as few tiles revealed as possible",
+      "Choose your answer from 4 options when you think you know it",
+      "Fewer reveals = higher score. Correct guess = big bonus!",
+    ],
     enabled: true,
   },
   {
@@ -98,6 +130,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "2-5 min",
     difficulty: "medium",
     tags: ["typing", "music", "chill"],
+    howToPlay: [
+      "Type the displayed text as accurately as possible",
+      "Correct keystrokes build your combo multiplier",
+      "Mistakes break your combo — stay focused!",
+      "Higher combo = higher score per keystroke",
+      "Complete all sentences to finish",
+    ],
     enabled: true,
   },
   {
@@ -114,6 +153,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["sandbox", "physics", "creative"],
+    howToPlay: [
+      "Select a particle type: Sand, Water, Fire, or Wall",
+      "Click and drag on the canvas to spawn particles",
+      "Watch particles interact — sand falls, water flows, fire rises",
+      "Build landscapes, dams, and watch the physics play out",
+      "No score — just a creative sandbox to experiment in!",
+    ],
     enabled: true,
   },
   {
@@ -130,6 +176,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "hard",
     tags: ["coding", "debugging", "speed"],
+    howToPlay: [
+      "Each level shows a code snippet with a syntax error",
+      "Find the bug and type the corrected line",
+      "Beat the timer to earn points",
+      "Errors get trickier as levels progress",
+      "Perfect fix = bonus points!",
+    ],
     enabled: true,
   },
   {
@@ -146,6 +199,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "medium",
     tags: ["stars", "patterns", "spatial"],
+    howToPlay: [
+      "A target constellation pattern is shown at the top",
+      "Click stars in the sky to connect them with lines",
+      "Recreate the constellation pattern by connecting the right stars",
+      "Complete it before time runs out for bonus points",
+      "Each constellation solved adds more time",
+    ],
     enabled: true,
   },
   {
@@ -162,6 +222,13 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["collecting", "luck", "gacha"],
+    howToPlay: [
+      "Spend coins to pull capsules from the machine",
+      "Each capsule contains a random item with a rarity tier",
+      "Collect items to complete sets for bonus rewards",
+      "Rarer items are harder to find — keep pulling!",
+      "Score is based on your collection value",
+    ],
     enabled: true,
   },
 
@@ -180,7 +247,14 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["relaxing", "creative", "zen"],
-    enabled: false,
+    howToPlay: [
+      "Choose a tool: Rake, Stone, or Plant",
+      "Rake: Click and drag to draw zen sand patterns",
+      "Stone: Click to place decorative stones",
+      "Plant: Click to grow trees, bushes, and flowers",
+      "Create your perfect zen garden — earn serenity points as you go",
+    ],
+    enabled: true,
   },
   {
     slug: "workspace-pet",
@@ -196,7 +270,15 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "ongoing",
     difficulty: "easy",
     tags: ["pet", "tamagotchi", "cute"],
-    enabled: false,
+    howToPlay: [
+      "Your pet has 3 stats: Hunger, Happiness, and Energy",
+      "Feed: Restores hunger but costs some energy",
+      "Play: Boosts happiness but drains energy and hunger",
+      "Sleep: Restores energy over time",
+      "Pet: Give a quick happiness boost",
+      "Keep all stats above zero or it's game over!",
+    ],
+    enabled: true,
   },
   {
     slug: "focus-forest",
@@ -212,7 +294,14 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5-25 min",
     difficulty: "easy",
     tags: ["focus", "productivity", "nature"],
-    enabled: false,
+    howToPlay: [
+      "Start a focus session and watch your tree grow",
+      "The tree progresses through 5 stages over 25 minutes",
+      "Stay focused — your tree grows as long as you're active",
+      "Click 'Harvest' when ready to save your tree to your forest",
+      "Your score is total focus time in seconds",
+    ],
+    enabled: true,
   },
   {
     slug: "neon-rhythm",
@@ -220,7 +309,7 @@ export const gameRegistry: GameConfig[] = [
     description: "Hit notes to the beat in this neon-styled rhythm game.",
     category: "arcade",
     scoreType: "combo",
-    renderingMode: "phaser",
+    renderingMode: "dom",
     thumbnail: "/games/neon-rhythm.png",
     color: "#ff2d95",
     minPlayers: 1,
@@ -228,7 +317,15 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "3-5 min",
     difficulty: "hard",
     tags: ["rhythm", "music", "arcade"],
-    enabled: false,
+    howToPlay: [
+      "Notes fall down 4 lanes toward the hit zone",
+      "Press D, F, J, or K when notes reach the bottom line",
+      "Perfect timing (within 50ms) = 100 points",
+      "Good timing (within 100ms) = 50 points",
+      "Build combos for score multipliers — every 5 combo adds bonus points",
+      "Choose from 3 songs with increasing difficulty",
+    ],
+    enabled: true,
   },
   {
     slug: "hexagon-land",
@@ -236,7 +333,7 @@ export const gameRegistry: GameConfig[] = [
     description: "Place hexagonal tiles to build a landscape. Match biomes for bonus points.",
     category: "puzzle",
     scoreType: "points",
-    renderingMode: "phaser",
+    renderingMode: "dom",
     thumbnail: "/games/hexagon-land.png",
     color: "#00fff5",
     minPlayers: 1,
@@ -244,7 +341,14 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5-10 min",
     difficulty: "medium",
     tags: ["strategy", "tiles", "building"],
-    enabled: false,
+    howToPlay: [
+      "You have 20 hexagonal tiles to place on the grid",
+      "Each tile has a random biome: Forest, Water, Mountain, Desert, City, or Farm",
+      "Click an empty hex to place your current tile",
+      "+1 point per placement, +3 bonus per adjacent matching biome",
+      "Plan ahead using the 3-tile preview queue for maximum points",
+    ],
+    enabled: true,
   },
   {
     slug: "one-minute-barista",
@@ -260,7 +364,15 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "1 min",
     difficulty: "hard",
     tags: ["speed", "memory", "arcade"],
-    enabled: false,
+    howToPlay: [
+      "Orders appear at the top — up to 3 at a time",
+      "Click ingredient buttons to add them to your cup",
+      "Click 'Serve' when your cup matches an order",
+      "Correct order = +10 points (+5 speed bonus if under 5 seconds)",
+      "Wrong drink = -5 points. Use 'Dump' to start over",
+      "Serve as many orders as you can in 60 seconds!",
+    ],
+    enabled: true,
   },
   {
     slug: "magnetic-poetry",
@@ -276,7 +388,14 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "5+ min",
     difficulty: "easy",
     tags: ["words", "creative", "social"],
-    enabled: false,
+    howToPlay: [
+      "Drag word magnets from the tray onto the fridge board",
+      "Arrange words to create poems, phrases, or messages",
+      "Move words around by clicking and dragging them",
+      "Click 'New Words' to shuffle and get a fresh set",
+      "No right or wrong answers — just express yourself!",
+    ],
+    enabled: true,
   },
   {
     slug: "community-grid",
@@ -292,7 +411,14 @@ export const gameRegistry: GameConfig[] = [
     estimatedPlayTime: "ongoing",
     difficulty: "easy",
     tags: ["multiplayer", "pixel-art", "community"],
-    enabled: false,
+    howToPlay: [
+      "Pick a color from the 16-color palette below the canvas",
+      "Choose a tool: Pencil (single pixel), Fill (flood fill), or Eraser",
+      "Click or drag on the 32x32 grid to place pixels",
+      "Use the fill tool to color large areas quickly",
+      "Create pixel art, patterns, or collaborate with others!",
+    ],
+    enabled: true,
   },
 ];
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { Trophy, Play, Pause, RotateCcw, Sparkles } from "lucide-react";
+import { Trophy, Play, Pause, RotateCcw, Sparkles, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedGradientText } from "@/components/ui/animated-text";
@@ -151,6 +151,25 @@ export function GameShell({ config, children }: GameShellProps) {
               <Badge>{config.difficulty}</Badge>
               <span>{config.estimatedPlayTime}</span>
             </div>
+
+            {/* How to Play instructions */}
+            {config.howToPlay && config.howToPlay.length > 0 && (
+              <div className="w-full max-w-md rounded-lg border border-border bg-surface-2 p-4">
+                <div className="mb-2 flex items-center gap-2 text-sm font-semibold" style={{ color: config.color }}>
+                  <BookOpen className="h-4 w-4" />
+                  How to Play
+                </div>
+                <ul className="space-y-1">
+                  {config.howToPlay.map((step, i) => (
+                    <li key={i} className="flex gap-2 text-xs text-muted">
+                      <span className="font-mono font-bold" style={{ color: config.color }}>{i + 1}.</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <Button size="lg" onClick={startGame} className="group">
               <Play className="h-5 w-5 transition-transform group-hover:scale-125" />
               Start Game

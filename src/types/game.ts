@@ -16,6 +16,7 @@ export interface GameConfig {
   estimatedPlayTime: string; // e.g. "2-5 min"
   difficulty: "easy" | "medium" | "hard";
   tags: string[];
+  howToPlay?: string[];
   enabled: boolean;
 }
 

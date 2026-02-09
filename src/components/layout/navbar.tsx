@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Gamepad2, BookOpen, Trophy, User, Menu, X, Volume2, VolumeX } from "lucide-react";
+import { Gamepad2, BookOpen, Trophy, User, Menu, X, Volume2, VolumeX, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/theme-provider";
 
 const navLinks = [
   { href: "/games", label: "Games", icon: Gamepad2 },
@@ -18,6 +19,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -72,6 +74,19 @@ export function Navbar() {
 
         {/* Right side */}
         <div className="hidden items-center gap-2 md:flex">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </button>
+
           {/* Sound toggle */}
           <button
             onClick={() => setSoundOn(!soundOn)}

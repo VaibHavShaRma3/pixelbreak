@@ -11,21 +11,36 @@ describe("Game Registry", () => {
     expect(gameRegistry.length).toBe(18);
   });
 
-  it("should have 10 enabled games (Phase 1 + Phase 3)", () => {
+  it("should have all 18 games enabled", () => {
     const enabled = getEnabledGames();
-    expect(enabled.length).toBe(10);
+    expect(enabled.length).toBe(18);
     expect(enabled.map((g) => g.slug).sort()).toEqual([
       "bubble-wrap",
       "color-match",
+      "community-grid",
       "constellation-hunter",
       "daily-pixel-puzzle",
       "falling-sand",
+      "focus-forest",
       "gacha-capsule",
+      "hexagon-land",
       "lo-fi-typer",
+      "magnetic-poetry",
+      "neon-rhythm",
+      "one-minute-barista",
       "stack",
       "sudoku-lite",
       "syntax-breaker",
+      "workspace-pet",
+      "zen-garden",
     ]);
+  });
+
+  it("every game should have how-to-play instructions", () => {
+    gameRegistry.forEach((game) => {
+      expect(game.howToPlay).toBeDefined();
+      expect(game.howToPlay!.length).toBeGreaterThan(0);
+    });
   });
 
   it("should find a game by slug", () => {
