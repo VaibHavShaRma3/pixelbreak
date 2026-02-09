@@ -50,12 +50,20 @@ export interface VelocityEngine {
 }
 
 export function initEngine(container: HTMLDivElement): VelocityEngine {
+  // Ensure container has dimensions (fallback if CSS hasn't resolved yet)
+  const width = container.clientWidth || container.offsetWidth || 800;
+  const height = container.clientHeight || container.offsetHeight || 500;
+
   // Renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setSize(width, height);
   renderer.shadowMap.enabled = false;
   renderer.setClearColor(0x050510);
+  // Ensure the canvas fills the container
+  renderer.domElement.style.display = "block";
+  renderer.domElement.style.width = "100%";
+  renderer.domElement.style.height = "100%";
   container.appendChild(renderer.domElement);
 
   // Scene
@@ -63,20 +71,15 @@ export function initEngine(container: HTMLDivElement): VelocityEngine {
   scene.fog = new THREE.FogExp2(0x050510, 0.008);
 
   // Lighting
-  const ambient = new THREE.AmbientLight(0x404060, 1);
+  const ambient = new THREE.AmbientLight(0x606080, 1.5);
   scene.add(ambient);
 
-  const directional = new THREE.DirectionalLight(0xffffff, 0.5);
+  const directional = new THREE.DirectionalLight(0xffffff, 0.8);
   directional.position.set(50, 100, 50);
   scene.add(directional);
 
   // Camera
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    container.clientWidth / container.clientHeight,
-    0.1,
-    500
-  );
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 500);
 
   // Track
   const track = createTrack();
@@ -96,6 +99,9 @@ export function initEngine(container: HTMLDivElement): VelocityEngine {
   const startAngle = Math.atan2(startTangent.x, startTangent.z);
   physics.playerBody.quaternion.setFromEuler(0, startAngle, 0);
 
+  // Sync player mesh to physics body immediately
+  syncMeshToBody(playerMesh.group, physics.playerBody);
+
   // AI racers
   const aiRacers = createAIRacers(
     physics.world,
@@ -105,6 +111,24 @@ export function initEngine(container: HTMLDivElement): VelocityEngine {
   aiRacers.forEach((r) => scene.add(r.mesh.group));
 
   const cameraState = createFollowCameraState();
+
+  // Set initial camera position behind the player car
+  const camOffset = new THREE.Vector3(0, 5, -10);
+  const playerQuat = new THREE.Quaternion(
+    physics.playerBody.quaternion.x,
+    physics.playerBody.quaternion.y,
+    physics.playerBody.quaternion.z,
+    physics.playerBody.quaternion.w
+  );
+  camOffset.applyQuaternion(playerQuat);
+  camera.position.set(
+    startPos.x + camOffset.x,
+    startPos.y + camOffset.y + 1,
+    startPos.z + camOffset.z
+  );
+  camera.lookAt(startPos.x, 1, startPos.z);
+  cameraState.currentPosition.copy(camera.position);
+  cameraState.currentLookAt.set(startPos.x, 1, startPos.z);
 
   const engine: VelocityEngine = {
     scene,
@@ -132,6 +156,9 @@ export function initEngine(container: HTMLDivElement): VelocityEngine {
     countdownTimer: 3,
     disposed: false,
   };
+
+  // Initial render so the scene is visible immediately
+  renderer.render(scene, camera);
 
   return engine;
 }
@@ -177,8 +204,10 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
   // Clamp dt to prevent physics explosions
   const clampedDt = Math.min(dt, 0.05);
 
-  // Step physics
-  engine.physics.world.step(1 / 60, clampedDt, 3);
+  // === APPLY FORCES FIRST (before physics step) ===
+
+  // Always apply hover force to keep car above ground
+  applyHoverForce(engine.physics.playerBody, engine.physics.world);
 
   if (raceState === "racing") {
     // Update race timers
@@ -187,10 +216,7 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
     store.setTotalRaceTime(engine.raceTimer);
     store.setCurrentLapTime(engine.lapTimer);
 
-    // Player hover
-    applyHoverForce(engine.physics.playerBody, engine.physics.world);
-
-    // Player vehicle update
+    // Player vehicle update (applies acceleration/steering/drift forces)
     const result = updateVehicle(
       clampedDt,
       engine.input,
@@ -201,13 +227,32 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
     store.setSpeed(result.speed);
     store.setDrift(result.drift.active, result.drift.charge);
 
-    // Check boost pads
+    // AI update (applies AI forces before step)
+    updateAIRacers(
+      engine.aiRacers,
+      engine.track.curve,
+      engine.playerProgress,
+      store.totalLaps,
+      clampedDt
+    );
+  }
+
+  // === STEP PHYSICS (uses all queued forces) ===
+  engine.physics.world.step(1 / 60, clampedDt, 3);
+
+  // === POST-STEP: sync visuals and check game logic ===
+
+  // Sync player mesh to physics body
+  syncMeshToBody(engine.playerMesh.group, engine.physics.playerBody);
+
+  if (raceState === "racing") {
     const playerPos = new THREE.Vector3(
       engine.physics.playerBody.position.x,
       engine.physics.playerBody.position.y,
       engine.physics.playerBody.position.z
     );
 
+    // Check boost pads
     for (const pad of engine.track.boostPads) {
       const dist = playerPos.distanceTo(pad.position);
       if (dist < ROAD_WIDTH * 0.4) {
@@ -229,16 +274,13 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
 
     // Detect lap completion
     if (prevT > 0.8 && currentT < 0.2) {
-      // Crossed start/finish line
       const allCheckpoints = engine.playerCheckpointsHit.every((c) => c);
       if (allCheckpoints) {
-        // Lap complete
         store.addLapTime(engine.lapTimer);
         engine.lapTimer = 0;
         engine.playerLap++;
 
         if (engine.playerLap > store.totalLaps) {
-          // Race finished
           store.setRaceState("finished");
           store.setLap(store.totalLaps);
           return;
@@ -251,15 +293,6 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
 
     engine.playerProgress = (engine.playerLap - 1) + currentT;
 
-    // AI update
-    updateAIRacers(
-      engine.aiRacers,
-      engine.track.curve,
-      engine.playerProgress,
-      store.totalLaps,
-      clampedDt
-    );
-
     // Position calculation
     const position = calculatePositions(engine.playerProgress, engine.aiRacers);
     store.setPosition(position);
@@ -269,9 +302,6 @@ export function updateEngine(engine: VelocityEngine, dt: number): void {
     progress.push(engine.playerProgress);
     store.setRacerProgress(progress);
   }
-
-  // Sync player mesh
-  syncMeshToBody(engine.playerMesh.group, engine.physics.playerBody);
 
   // Update exhaust intensity based on speed
   const speedFraction = store.speed / store.maxSpeed;

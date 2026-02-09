@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Trophy, Medal, Gamepad2, Clock } from "lucide-react";
+import { Trophy, Medal, Gamepad2, Clock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TiltCard } from "@/components/ui/tilt-card";
@@ -215,6 +215,13 @@ export default function LeaderboardsPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
+      <Link
+        href="/"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Home
+      </Link>
       {/* Hero */}
       <ScrollReveal direction="down">
         <div className="flex items-center gap-3">

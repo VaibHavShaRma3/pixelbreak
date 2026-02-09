@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { useGameLoop } from "@/games/_shared/use-game-loop";
 import { useVelocityStore } from "./store";
 import {
@@ -28,49 +28,53 @@ export default function Velocity({
 }: VelocityProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<VelocityEngine | null>(null);
-  const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const store = useVelocityStore;
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const finishedRef = useRef(false);
 
   // Initialize engine when playing starts
   useEffect(() => {
-    if (gameState === "playing" && containerRef.current && !engineRef.current) {
-      store.getState().reset();
+    if (gameState !== "playing" || !containerRef.current) return;
 
-      const engine = initEngine(containerRef.current);
-      engineRef.current = engine;
+    // Already initialized
+    if (engineRef.current) return;
 
-      // Start countdown
-      countdownIntervalRef.current = startCountdown(engine, () => {
-        // Countdown ended — race starts
-      });
-    }
+    useVelocityStore.getState().reset();
+    finishedRef.current = false;
+
+    const engine = initEngine(containerRef.current);
+    engineRef.current = engine;
+
+    // Start countdown
+    countdownRef.current = startCountdown(engine, () => {
+      // Race begins — focus the container for keyboard input
+      containerRef.current?.focus();
+    });
 
     return () => {
-      if (gameState !== "playing" && gameState !== "paused") {
-        if (countdownIntervalRef.current) {
-          clearInterval(countdownIntervalRef.current);
-          countdownIntervalRef.current = null;
-        }
-        if (engineRef.current) {
-          disposeEngine(engineRef.current);
-          engineRef.current = null;
-        }
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current);
+        countdownRef.current = null;
+      }
+      if (engineRef.current) {
+        disposeEngine(engineRef.current);
+        engineRef.current = null;
       }
     };
-  }, [gameState, store]);
+  }, [gameState]);
 
   // Game loop
   useGameLoop(
     (dt) => {
       const engine = engineRef.current;
-      if (!engine) return;
+      if (!engine || finishedRef.current) return;
 
       updateEngine(engine, dt);
 
       // Check if race finished
-      const raceState = store.getState().raceState;
-      if (raceState === "finished") {
-        const totalTime = store.getState().totalRaceTime;
+      const raceState = useVelocityStore.getState().raceState;
+      if (raceState === "finished" && !finishedRef.current) {
+        finishedRef.current = true;
+        const totalTime = useVelocityStore.getState().totalRaceTime;
         setScore(Math.round(totalTime));
         callbacks.onGameEnd(Math.round(totalTime));
       }
@@ -78,11 +82,15 @@ export default function Velocity({
     gameState === "playing"
   );
 
-  // Keyboard controls
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
+  // Keyboard controls — use direct event listeners, no useCallback
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
       const engine = engineRef.current;
-      if (!engine || store.getState().raceState !== "racing") return;
+      if (!engine) return;
+
+      // Allow input during both countdown (car locked by physics) and racing
+      const state = useVelocityStore.getState().raceState;
+      if (state !== "racing" && state !== "countdown") return;
 
       switch (e.code) {
         case "KeyW":
@@ -110,45 +118,42 @@ export default function Velocity({
           e.preventDefault();
           break;
       }
-    },
-    [store]
-  );
-
-  const handleKeyUp = useCallback((e: KeyboardEvent) => {
-    const engine = engineRef.current;
-    if (!engine) return;
-
-    switch (e.code) {
-      case "KeyW":
-      case "ArrowUp":
-        engine.input.forward = false;
-        break;
-      case "KeyS":
-      case "ArrowDown":
-        engine.input.backward = false;
-        break;
-      case "KeyA":
-      case "ArrowLeft":
-        engine.input.left = false;
-        break;
-      case "KeyD":
-      case "ArrowRight":
-        engine.input.right = false;
-        break;
-      case "Space":
-        engine.input.drift = false;
-        break;
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [handleKeyDown, handleKeyUp]);
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      const engine = engineRef.current;
+      if (!engine) return;
+
+      switch (e.code) {
+        case "KeyW":
+        case "ArrowUp":
+          engine.input.forward = false;
+          break;
+        case "KeyS":
+        case "ArrowDown":
+          engine.input.backward = false;
+          break;
+        case "KeyA":
+        case "ArrowLeft":
+          engine.input.left = false;
+          break;
+        case "KeyD":
+        case "ArrowRight":
+          engine.input.right = false;
+          break;
+        case "Space":
+          engine.input.drift = false;
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, []);
 
   // Handle resize
   useEffect(() => {
@@ -164,11 +169,12 @@ export default function Velocity({
   }, []);
 
   return (
-    <div className="relative h-full w-full" style={{ minHeight: 500 }}>
+    <div className="relative w-full" style={{ height: 500 }}>
       <div
         ref={containerRef}
-        className="h-full w-full"
-        style={{ touchAction: "none" }}
+        className="absolute inset-0"
+        tabIndex={0}
+        style={{ touchAction: "none", outline: "none" }}
       />
       <VelocityHUD />
     </div>

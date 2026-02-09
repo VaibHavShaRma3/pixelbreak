@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { User, Trophy, Gamepad2, Calendar, Star } from "lucide-react";
+import { User, Trophy, Gamepad2, Calendar, Star, ArrowLeft } from "lucide-react";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
@@ -114,6 +115,13 @@ export default function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
+      <Link
+        href="/leaderboards"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Leaderboards
+      </Link>
       {/* Profile Header */}
       <ScrollReveal direction="down">
         <div className="flex items-center gap-5">

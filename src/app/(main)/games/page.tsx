@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Gamepad2 } from "lucide-react";
+import { Gamepad2, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { GamePreview } from "@/components/ui/game-preview";
@@ -27,12 +27,19 @@ export default function GamesPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
+      <Link
+        href="/"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Home
+      </Link>
       <ScrollReveal>
         <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-neon-cyan glow-cyan">
           All Games
         </h1>
         <p className="mt-2 text-muted">
-          18 games across 4 categories. More coming soon!
+          19 games across 4 categories. More coming soon!
         </p>
       </ScrollReveal>
 
