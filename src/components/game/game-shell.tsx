@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Trophy, Play, Pause, RotateCcw } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
+import { Trophy, Play, Pause, RotateCcw, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedGradientText } from "@/components/ui/animated-text";
+import { useConfetti } from "@/components/ui/confetti";
 import { formatScore, formatTime } from "@/lib/utils";
 import type { GameConfig, GameState, GameCallbacks } from "@/types/game";
 
@@ -24,6 +26,17 @@ export function GameShell({ config, children }: GameShellProps) {
   const [gameState, setGameState] = useState<GameState>("idle");
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState<number | null>(null);
+  const [scoreFlash, setScoreFlash] = useState(false);
+  const { fireConfetti, fireStars } = useConfetti();
+
+  // Flash score when it changes
+  useEffect(() => {
+    if (score > 0) {
+      setScoreFlash(true);
+      const t = setTimeout(() => setScoreFlash(false), 200);
+      return () => clearTimeout(t);
+    }
+  }, [score]);
 
   const startGame = useCallback(() => {
     setGameState("playing");
@@ -46,6 +59,9 @@ export function GameShell({ config, children }: GameShellProps) {
     onGameEnd: (final: number) => {
       setFinalScore(final);
       setGameState("gameover");
+      // Confetti celebration!
+      fireConfetti();
+      setTimeout(() => fireStars(), 300);
     },
     onScoreSubmit: async (submittedScore: number, metadata?: Record<string, unknown>) => {
       try {
@@ -67,7 +83,7 @@ export function GameShell({ config, children }: GameShellProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* HUD */}
-      <div className="flex items-center justify-between rounded-xl border border-border bg-surface p-4">
+      <div className="flex items-center justify-between rounded-xl border border-border bg-surface p-4 transition-all">
         <div className="flex items-center gap-3">
           <h1
             className="font-[family-name:var(--font-pixel)] text-sm"
@@ -79,10 +95,16 @@ export function GameShell({ config, children }: GameShellProps) {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Score display */}
+          {/* Score display with flash */}
           <div className="flex items-center gap-2">
             <Trophy className="h-4 w-4 text-neon-yellow" />
-            <span className="font-mono text-lg font-bold text-foreground">
+            <span
+              className="font-mono text-lg font-bold transition-all duration-150"
+              style={{
+                color: scoreFlash ? config.color : "var(--foreground)",
+                transform: scoreFlash ? "scale(1.2)" : "scale(1)",
+              }}
+            >
               {config.scoreType === "time"
                 ? formatTime(score)
                 : formatScore(score)}
@@ -114,7 +136,8 @@ export function GameShell({ config, children }: GameShellProps) {
       {/* Game area */}
       <div className="relative min-h-[500px] rounded-xl border border-border bg-surface overflow-hidden">
         {gameState === "idle" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 animate-fade-up">
+            <Sparkles className="h-6 w-6 text-neon-yellow animate-pulse" />
             <h2
               className="font-[family-name:var(--font-pixel)] text-xl"
               style={{ color: config.color }}
@@ -128,8 +151,8 @@ export function GameShell({ config, children }: GameShellProps) {
               <Badge>{config.difficulty}</Badge>
               <span>{config.estimatedPlayTime}</span>
             </div>
-            <Button size="lg" onClick={startGame}>
-              <Play className="h-5 w-5" />
+            <Button size="lg" onClick={startGame} className="group">
+              <Play className="h-5 w-5 transition-transform group-hover:scale-125" />
               Start Game
             </Button>
           </div>
@@ -147,7 +170,7 @@ export function GameShell({ config, children }: GameShellProps) {
               resetGame,
             })}
             {gameState === "paused" && (
-              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-fade-up">
                 <div className="text-center">
                   <p className="font-[family-name:var(--font-pixel)] text-lg text-neon-yellow">
                     PAUSED
@@ -162,13 +185,13 @@ export function GameShell({ config, children }: GameShellProps) {
         )}
 
         {gameState === "gameover" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background/90 backdrop-blur-sm">
-            <p className="font-[family-name:var(--font-pixel)] text-lg text-neon-pink">
-              GAME OVER
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background/90 backdrop-blur-sm animate-fade-up">
+            <p className="font-[family-name:var(--font-pixel)] text-lg">
+              <AnimatedGradientText>GAME OVER</AnimatedGradientText>
             </p>
             <div className="text-center">
               <p className="text-sm text-muted">Final Score</p>
-              <p className="font-mono text-4xl font-bold text-neon-cyan glow-cyan">
+              <p className="font-mono text-5xl font-bold text-neon-cyan glow-cyan">
                 {finalScore !== null
                   ? config.scoreType === "time"
                     ? formatTime(finalScore)
@@ -177,8 +200,8 @@ export function GameShell({ config, children }: GameShellProps) {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button onClick={startGame}>
-                <Play className="h-4 w-4" />
+              <Button onClick={startGame} className="group">
+                <Play className="h-4 w-4 transition-transform group-hover:scale-125" />
                 Play Again
               </Button>
               <Button
@@ -186,6 +209,7 @@ export function GameShell({ config, children }: GameShellProps) {
                 onClick={() => {
                   if (finalScore !== null) {
                     callbacks.onScoreSubmit(finalScore);
+                    fireStars();
                   }
                 }}
               >

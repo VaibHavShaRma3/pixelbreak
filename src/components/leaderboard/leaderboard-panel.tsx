@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Trophy, Medal, Clock } from "lucide-react";
+import { Trophy, Medal } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { LeaderboardSkeleton } from "@/components/ui/skeleton";
 import { formatScore } from "@/lib/utils";
 import type { LeaderboardTimeFilter, LeaderboardEntry } from "@/types/game";
 
@@ -37,11 +38,30 @@ export function LeaderboardPanel({ gameSlug, gameTitle }: LeaderboardPanelProps)
       });
   }, [gameSlug, filter]);
 
-  const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Trophy className="h-4 w-4 text-neon-yellow" />;
-    if (rank === 2) return <Medal className="h-4 w-4 text-gray-400" />;
-    if (rank === 3) return <Medal className="h-4 w-4 text-amber-700" />;
-    return <span className="text-xs text-muted w-4 text-center">{rank}</span>;
+  const getRankDisplay = (rank: number) => {
+    if (rank === 1)
+      return (
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-neon-yellow/20">
+          <Trophy className="h-3.5 w-3.5 text-neon-yellow" />
+        </div>
+      );
+    if (rank === 2)
+      return (
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400/20">
+          <Medal className="h-3.5 w-3.5 text-gray-400" />
+        </div>
+      );
+    if (rank === 3)
+      return (
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-700/20">
+          <Medal className="h-3.5 w-3.5 text-amber-600" />
+        </div>
+      );
+    return (
+      <div className="flex h-6 w-6 items-center justify-center">
+        <span className="text-xs font-bold text-muted">{rank}</span>
+      </div>
+    );
   };
 
   return (
@@ -67,23 +87,25 @@ export function LeaderboardPanel({ gameSlug, gameTitle }: LeaderboardPanelProps)
       </CardHeader>
       <CardContent>
         {loading ? (
-          <div className="flex items-center justify-center py-8">
-            <Clock className="h-5 w-5 animate-spin text-muted" />
-          </div>
+          <LeaderboardSkeleton />
         ) : entries.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">
-            No scores yet. Be the first!
-          </p>
+          <div className="flex flex-col items-center gap-2 py-8">
+            <Trophy className="h-8 w-8 text-muted/30" />
+            <p className="text-center text-sm text-muted">
+              No scores yet. Be the first!
+            </p>
+          </div>
         ) : (
           <div className="space-y-2">
             {entries.map((entry, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 rounded-lg bg-surface-2 px-3 py-2"
+                className="flex items-center gap-3 rounded-lg bg-surface-2 px-3 py-2 transition-all hover:bg-surface-2/80"
+                style={{
+                  animation: `fade-up 0.3s ease-out ${i * 50}ms both`,
+                }}
               >
-                <div className="flex w-6 items-center justify-center">
-                  {getRankIcon(entry.rank)}
-                </div>
+                {getRankDisplay(entry.rank)}
                 <div className="flex-1 truncate text-sm text-foreground">
                   {entry.username || "Anonymous"}
                 </div>
