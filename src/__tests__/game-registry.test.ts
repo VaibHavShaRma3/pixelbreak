@@ -7,13 +7,13 @@ import {
 } from "@/lib/game-registry";
 
 describe("Game Registry", () => {
-  it("should have 18 games total", () => {
-    expect(gameRegistry.length).toBe(18);
+  it("should have 19 games total", () => {
+    expect(gameRegistry.length).toBe(19);
   });
 
-  it("should have all 18 games enabled", () => {
+  it("should have all 19 games enabled", () => {
     const enabled = getEnabledGames();
-    expect(enabled.length).toBe(18);
+    expect(enabled.length).toBe(19);
     expect(enabled.map((g) => g.slug).sort()).toEqual([
       "bubble-wrap",
       "color-match",
@@ -31,6 +31,7 @@ describe("Game Registry", () => {
       "stack",
       "sudoku-lite",
       "syntax-breaker",
+      "velocity",
       "workspace-pet",
       "zen-garden",
     ]);

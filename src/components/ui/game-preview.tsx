@@ -30,12 +30,14 @@ export function GamePreview({ slug, color }: GamePreviewProps) {
       {slug === "one-minute-barista" && <BaristaPreview color={color} />}
       {slug === "magnetic-poetry" && <MagneticPoetryPreview color={color} />}
       {slug === "community-grid" && <CommunityGridPreview color={color} />}
+      {slug === "velocity" && <VelocityPreview color={color} />}
       {![
         "bubble-wrap", "color-match", "stack", "sudoku-lite",
         "daily-pixel-puzzle", "lo-fi-typer", "falling-sand",
         "syntax-breaker", "constellation-hunter", "gacha-capsule",
         "zen-garden", "workspace-pet", "focus-forest", "neon-rhythm",
         "hexagon-land", "one-minute-barista", "magnetic-poetry", "community-grid",
+        "velocity",
       ].includes(slug) && (
         <Gamepad2 className="h-12 w-12" style={{ color }} />
       )}
@@ -531,6 +533,73 @@ function CommunityGridPreview({ color }: { color: string }) {
           style={{ backgroundColor: colors[p], opacity: p ? 0.9 : 0.15 }}
         />
       ))}
+    </div>
+  );
+}
+
+function VelocityPreview({ color }: { color: string }) {
+  return (
+    <div
+      className="relative flex h-full w-full items-end justify-center overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #050510 0%, #0a0a2e 100%)" }}
+    >
+      {/* Grid lines */}
+      <div className="absolute inset-0" style={{ perspective: "200px" }}>
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[60%]"
+          style={{
+            backgroundImage: `
+              linear-gradient(${color}20 1px, transparent 1px),
+              linear-gradient(90deg, ${color}20 1px, transparent 1px)
+            `,
+            backgroundSize: "20px 20px",
+            transform: "rotateX(60deg)",
+            transformOrigin: "bottom center",
+          }}
+        />
+      </div>
+      {/* Car body */}
+      <div className="relative mb-6 z-10">
+        <div
+          className="h-3 w-8 rounded-sm"
+          style={{ backgroundColor: "#111122", border: `1px solid ${color}60` }}
+        />
+        <div
+          className="h-1.5 w-5 mx-auto -mt-0.5 rounded-t-sm"
+          style={{ backgroundColor: color, opacity: 0.8 }}
+        />
+        {/* Underglow */}
+        <div
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-6 rounded-full"
+          style={{
+            backgroundColor: color,
+            opacity: 0.4,
+            filter: `blur(3px)`,
+            animation: "pulse 1.5s ease-in-out infinite",
+          }}
+        />
+      </div>
+      {/* Speed lines */}
+      {[15, 35, 65, 85].map((x, i) => (
+        <div
+          key={i}
+          className="absolute h-4 w-px"
+          style={{
+            left: `${x}%`,
+            bottom: `${30 + i * 8}%`,
+            backgroundColor: color,
+            opacity: 0.3,
+            animation: `fade-up ${0.8 + i * 0.2}s ease-in-out infinite`,
+          }}
+        />
+      ))}
+      {/* Speed text */}
+      <div
+        className="absolute top-2 right-2 font-mono text-[8px] font-bold"
+        style={{ color, textShadow: `0 0 6px ${color}` }}
+      >
+        188
+      </div>
     </div>
   );
 }

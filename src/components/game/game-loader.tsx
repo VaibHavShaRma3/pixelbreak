@@ -24,6 +24,7 @@ const gameComponents: Record<string, React.ComponentType<any>> = {
   "focus-forest": dynamic(() => import("@/games/focus-forest"), { ssr: false }),
   "magnetic-poetry": dynamic(() => import("@/games/magnetic-poetry"), { ssr: false }),
   "community-grid": dynamic(() => import("@/games/community-grid"), { ssr: false }),
+  velocity: dynamic(() => import("@/games/velocity"), { ssr: false }),
 };
 
 interface GameLoaderProps {
