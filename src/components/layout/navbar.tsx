@@ -32,14 +32,14 @@ export function Navbar() {
         "sticky top-0 z-50 border-b border-border transition-all duration-300",
         scrolled
           ? "navbar-scrolled border-border/50 h-14"
-          : "bg-background/80 backdrop-blur-md h-16"
+          : "bg-background/90 backdrop-blur-sm h-16"
       )}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <Gamepad2 className="h-6 w-6 text-neon-cyan transition-transform group-hover:rotate-12" />
-          <span className="font-[family-name:var(--font-pixel)] text-sm text-neon-cyan glow-cyan">
+          <Gamepad2 className="h-6 w-6 text-accent-pixel transition-transform group-hover:rotate-12" />
+          <span className="font-[family-name:var(--font-pixel)] text-sm text-accent-pixel">
             PixelBreak
           </span>
         </Link>
@@ -56,15 +56,15 @@ export function Navbar() {
                 className={cn(
                   "relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all duration-200",
                   active
-                    ? "bg-surface-2 text-neon-cyan"
+                    ? "bg-surface-2 text-accent-primary font-medium"
                     : "text-muted hover:bg-surface-2 hover:text-foreground"
                 )}
               >
                 <Icon className="h-4 w-4" />
                 {link.label}
-                {/* Active glow indicator */}
+                {/* Active solid indicator */}
                 {active && (
-                  <span className="absolute -bottom-[13px] left-1/2 h-[2px] w-8 -translate-x-1/2 bg-neon-cyan shadow-[0_0_8px_rgba(0,255,245,0.6)]" />
+                  <span className="absolute -bottom-[13px] left-1/2 h-[2px] w-8 -translate-x-1/2 bg-accent-primary rounded-full" />
                 )}
               </Link>
             );

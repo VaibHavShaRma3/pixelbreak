@@ -32,8 +32,8 @@ export function CategoryFilter({
         className={cn(
           "rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200",
           selected === null
-            ? "bg-neon-cyan text-background shadow-[0_0_10px_rgba(0,255,245,0.3)]"
-            : "border border-border text-muted hover:border-neon-cyan/50 hover:text-foreground"
+            ? "bg-accent-primary text-white shadow-sm"
+            : "border border-border text-muted hover:border-accent-primary/50 hover:text-foreground"
         )}
       >
         All
@@ -45,18 +45,13 @@ export function CategoryFilter({
           className={cn(
             "rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200",
             selected === cat.value
-              ? "text-background shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+              ? "text-white shadow-sm"
               : "border border-border text-muted hover:text-foreground"
           )}
           style={
             selected === cat.value
-              ? {
-                  backgroundColor: cat.color,
-                  boxShadow: `0 0 12px ${cat.color}50`,
-                }
-              : {
-                  borderColor: selected === cat.value ? cat.color : undefined,
-                }
+              ? { backgroundColor: cat.color }
+              : undefined
           }
         >
           {cat.label}

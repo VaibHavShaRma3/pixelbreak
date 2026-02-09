@@ -41,8 +41,8 @@ export function LeaderboardPanel({ gameSlug, gameTitle }: LeaderboardPanelProps)
   const getRankDisplay = (rank: number) => {
     if (rank === 1)
       return (
-        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-neon-yellow/20">
-          <Trophy className="h-3.5 w-3.5 text-neon-yellow" />
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent-yellow/20">
+          <Trophy className="h-3.5 w-3.5 text-accent-yellow" />
         </div>
       );
     if (rank === 2)
@@ -68,7 +68,7 @@ export function LeaderboardPanel({ gameSlug, gameTitle }: LeaderboardPanelProps)
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-neon-yellow" />
+          <Trophy className="h-5 w-5 text-accent-yellow" />
           Leaderboard
         </CardTitle>
         <div className="flex gap-1">
@@ -109,7 +109,7 @@ export function LeaderboardPanel({ gameSlug, gameTitle }: LeaderboardPanelProps)
                 <div className="flex-1 truncate text-sm text-foreground">
                   {entry.username || "Anonymous"}
                 </div>
-                <div className="font-mono text-sm font-bold text-neon-cyan">
+                <div className="font-mono text-sm font-bold text-accent-primary">
                   {formatScore(entry.score)}
                 </div>
               </div>

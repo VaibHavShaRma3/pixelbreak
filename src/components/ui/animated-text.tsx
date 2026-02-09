@@ -19,7 +19,7 @@ export function AnimatedGradientText({
       )}
       style={{
         backgroundImage:
-          "linear-gradient(90deg, #00fff5, #ff2d95, #39ff14, #b026ff, #00fff5)",
+          "linear-gradient(90deg, #1D4ED8, #DC2626, #16A34A, #7C3AED, #1D4ED8)",
         backgroundSize: "300% 100%",
         animation: "gradient-shift 4s ease-in-out infinite",
       }}

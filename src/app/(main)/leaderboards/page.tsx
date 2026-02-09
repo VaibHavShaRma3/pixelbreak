@@ -21,8 +21,8 @@ const TIME_FILTERS: { value: LeaderboardTimeFilter; label: string }[] = [
 function getRankDisplay(rank: number) {
   if (rank === 1)
     return (
-      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neon-yellow/20">
-        <Trophy className="h-4 w-4 text-neon-yellow" />
+      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-yellow/20">
+        <Trophy className="h-4 w-4 text-accent-yellow" />
       </div>
     );
   if (rank === 2)
@@ -104,11 +104,11 @@ function GameLeaderboardPreview({
               {getRankDisplay(entry.rank)}
               <Link
                 href={`/profile/${entry.username}`}
-                className="flex-1 truncate text-xs text-foreground hover:text-neon-cyan transition-colors"
+                className="flex-1 truncate text-xs text-foreground hover:text-accent-primary transition-colors"
               >
                 {entry.username || "Anonymous"}
               </Link>
-              <span className="font-mono text-xs font-bold text-neon-cyan">
+              <span className="font-mono text-xs font-bold text-accent-primary">
                 {formatScore(entry.score)}
               </span>
             </div>
@@ -118,7 +118,7 @@ function GameLeaderboardPreview({
 
       <Link
         href={`/games/${game.slug}`}
-        className="mt-3 block text-center text-xs text-muted hover:text-neon-cyan transition-colors"
+        className="mt-3 block text-center text-xs text-muted hover:text-accent-primary transition-colors"
       >
         View full leaderboard
       </Link>
@@ -178,7 +178,7 @@ function FullGameLeaderboard({
       {entries.map((entry, i) => (
         <div
           key={`${entry.rank}-${entry.username}-${i}`}
-          className="flex items-center gap-4 rounded-lg bg-surface px-4 py-3 border border-border transition-all hover:border-neon-cyan/30"
+          className="flex items-center gap-4 rounded-lg bg-surface px-4 py-3 border border-border transition-all hover:border-accent-primary/30"
           style={{
             animation: `fade-up 0.3s ease-out ${i * 40}ms both`,
           }}
@@ -186,11 +186,11 @@ function FullGameLeaderboard({
           {getRankDisplay(entry.rank)}
           <Link
             href={`/profile/${entry.username}`}
-            className="flex-1 truncate font-medium text-foreground hover:text-neon-cyan transition-colors"
+            className="flex-1 truncate font-medium text-foreground hover:text-accent-primary transition-colors"
           >
             {entry.username || "Anonymous"}
           </Link>
-          <span className="font-mono text-sm font-bold text-neon-cyan">
+          <span className="font-mono text-sm font-bold text-accent-primary">
             {formatScore(entry.score)}
           </span>
           {entry.createdAt && (
@@ -217,7 +217,7 @@ export default function LeaderboardsPage() {
     <div className="mx-auto max-w-7xl px-4 py-12">
       <Link
         href="/"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent-primary transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Home
@@ -225,8 +225,8 @@ export default function LeaderboardsPage() {
       {/* Hero */}
       <ScrollReveal direction="down">
         <div className="flex items-center gap-3">
-          <Trophy className="h-8 w-8 text-neon-yellow" />
-          <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-neon-cyan glow-cyan">
+          <Trophy className="h-8 w-8 text-accent-yellow" />
+          <h1 className="text-4xl font-extrabold text-foreground">
             Global Leaderboards
           </h1>
         </div>
@@ -243,8 +243,8 @@ export default function LeaderboardsPage() {
             onClick={() => setSelectedGame(null)}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
               selectedGame === null
-                ? "bg-neon-cyan text-background shadow-[0_0_10px_rgba(0,255,245,0.3)]"
-                : "border border-border text-muted hover:border-neon-cyan/50 hover:text-foreground"
+                ? "bg-accent-primary text-white shadow-sm"
+                : "border border-border text-muted hover:border-accent-primary/50 hover:text-foreground"
             }`}
           >
             All Games
@@ -255,15 +255,12 @@ export default function LeaderboardsPage() {
               onClick={() => setSelectedGame(game.slug)}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
                 selectedGame === game.slug
-                  ? "text-background"
+                  ? "text-white shadow-sm"
                   : "border border-border text-muted hover:text-foreground"
               }`}
               style={
                 selectedGame === game.slug
-                  ? {
-                      backgroundColor: game.color,
-                      boxShadow: `0 0 12px ${game.color}50`,
-                    }
+                  ? { backgroundColor: game.color }
                   : undefined
               }
             >

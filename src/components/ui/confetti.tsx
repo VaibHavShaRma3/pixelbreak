@@ -5,8 +5,7 @@ import confetti from "canvas-confetti";
 
 export function useConfetti() {
   const fireConfetti = useCallback(() => {
-    // Neon-colored confetti burst
-    const colors = ["#00fff5", "#ff2d95", "#39ff14", "#b026ff", "#ffe600"];
+    const colors = ["#1D4ED8", "#DC2626", "#16A34A", "#7C3AED", "#F97316"];
 
     // Center burst
     confetti({
@@ -48,7 +47,7 @@ export function useConfetti() {
       gravity: 0,
       decay: 0.94,
       startVelocity: 15,
-      colors: ["#ffe600", "#00fff5"],
+      colors: ["#F97316", "#1D4ED8"],
       shapes: ["star"],
       origin: { y: 0.5 },
     });

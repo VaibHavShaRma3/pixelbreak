@@ -159,7 +159,7 @@ export function ReviewPanel({ gameSlug }: ReviewPanelProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <MessageSquare className="h-5 w-5 text-neon-yellow" />
+          <MessageSquare className="h-5 w-5 text-accent-yellow" />
           Reviews
           {reviews.length > 0 && (
             <span className="ml-2 text-sm font-normal text-muted">
@@ -215,7 +215,7 @@ export function ReviewPanel({ gameSlug }: ReviewPanelProps) {
                   onChange={(e) => setFormContent(e.target.value)}
                   placeholder="Share your thoughts about this game..."
                   rows={3}
-                  className="mb-3 w-full resize-none rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-neon-cyan focus:outline-none focus:ring-1 focus:ring-neon-cyan"
+                  className="mb-3 w-full resize-none rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent-primary focus:outline-none focus:ring-1 focus:ring-accent-primary"
                 />
 
                 {error && (
@@ -273,8 +273,8 @@ export function ReviewPanel({ gameSlug }: ReviewPanelProps) {
                           className="h-6 w-6 rounded-full"
                         />
                       ) : (
-                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-neon-purple/20">
-                          <User className="h-3 w-3 text-neon-purple" />
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent-purple/20">
+                          <User className="h-3 w-3 text-accent-purple" />
                         </div>
                       )}
                       <span className="text-sm font-medium text-foreground">

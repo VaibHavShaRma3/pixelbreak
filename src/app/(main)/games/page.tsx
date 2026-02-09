@@ -12,10 +12,10 @@ import { gameRegistry } from "@/lib/game-registry";
 import type { GameCategory } from "@/types/game";
 
 const categories: { value: GameCategory; label: string; color: string }[] = [
-  { value: "arcade", label: "Arcade", color: "#39ff14" },
-  { value: "puzzle", label: "Puzzle", color: "#b026ff" },
-  { value: "creative", label: "Creative", color: "#ffe600" },
-  { value: "chill", label: "Chill", color: "#00fff5" },
+  { value: "arcade", label: "Arcade", color: "#16A34A" },
+  { value: "puzzle", label: "Puzzle", color: "#7C3AED" },
+  { value: "creative", label: "Creative", color: "#D97706" },
+  { value: "chill", label: "Chill", color: "#0891B2" },
 ];
 
 export default function GamesPage() {
@@ -29,13 +29,13 @@ export default function GamesPage() {
     <div className="mx-auto max-w-7xl px-4 py-12">
       <Link
         href="/"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent-primary transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Home
       </Link>
       <ScrollReveal>
-        <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-neon-cyan glow-cyan">
+        <h1 className="text-4xl font-extrabold text-foreground">
           All Games
         </h1>
         <p className="mt-2 text-muted">
@@ -80,7 +80,7 @@ export default function GamesPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-foreground group-hover:text-neon-cyan transition-colors">
+                      <h3 className="font-semibold text-foreground group-hover:text-accent-primary transition-colors">
                         {game.title}
                       </h3>
                       {!game.enabled && (

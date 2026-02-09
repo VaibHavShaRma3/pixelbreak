@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import { Trophy, Play, Pause, RotateCcw, Sparkles, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AnimatedGradientText } from "@/components/ui/animated-text";
 import { useConfetti } from "@/components/ui/confetti";
 import { formatScore, formatTime } from "@/lib/utils";
 import type { GameConfig, GameState, GameCallbacks } from "@/types/game";
@@ -83,7 +82,7 @@ export function GameShell({ config, children }: GameShellProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* HUD */}
-      <div className="flex items-center justify-between rounded-xl border border-border bg-surface p-4 transition-all">
+      <div className="flex items-center justify-between rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all">
         <div className="flex items-center gap-3">
           <h1
             className="font-[family-name:var(--font-pixel)] text-sm"
@@ -97,7 +96,7 @@ export function GameShell({ config, children }: GameShellProps) {
         <div className="flex items-center gap-4">
           {/* Score display with flash */}
           <div className="flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-neon-yellow" />
+            <Trophy className="h-4 w-4 text-accent-yellow" />
             <span
               className="font-mono text-lg font-bold transition-all duration-150"
               style={{
@@ -134,10 +133,10 @@ export function GameShell({ config, children }: GameShellProps) {
       </div>
 
       {/* Game area */}
-      <div className="relative min-h-[500px] rounded-xl border border-border bg-surface overflow-hidden">
+      <div className="relative min-h-[500px] rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
         {gameState === "idle" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 animate-fade-up">
-            <Sparkles className="h-6 w-6 text-neon-yellow animate-pulse" />
+            <Sparkles className="h-6 w-6 text-accent-yellow animate-pulse" />
             <h2
               className="font-[family-name:var(--font-pixel)] text-xl"
               style={{ color: config.color }}
@@ -154,7 +153,7 @@ export function GameShell({ config, children }: GameShellProps) {
 
             {/* How to Play instructions */}
             {config.howToPlay && config.howToPlay.length > 0 && (
-              <div className="w-full max-w-lg rounded-xl border border-border bg-surface-2 p-5">
+              <div className="w-full max-w-lg rounded-2xl border border-border bg-surface-2 p-5">
                 <div className="mb-3 flex items-center gap-2 text-base font-bold" style={{ color: config.color }}>
                   <BookOpen className="h-5 w-5" />
                   How to Play
@@ -163,7 +162,7 @@ export function GameShell({ config, children }: GameShellProps) {
                   {config.howToPlay.map((step, i) => (
                     <li key={i} className="flex gap-3 text-sm leading-relaxed text-foreground/80">
                       <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-background"
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
                         style={{ backgroundColor: config.color }}
                       >
                         {i + 1}
@@ -196,7 +195,7 @@ export function GameShell({ config, children }: GameShellProps) {
             {gameState === "paused" && (
               <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-fade-up">
                 <div className="text-center">
-                  <p className="font-[family-name:var(--font-pixel)] text-lg text-neon-yellow">
+                  <p className="font-[family-name:var(--font-pixel)] text-lg text-accent-yellow">
                     PAUSED
                   </p>
                   <Button className="mt-4" onClick={pauseGame}>
@@ -210,12 +209,12 @@ export function GameShell({ config, children }: GameShellProps) {
 
         {gameState === "gameover" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background/90 backdrop-blur-sm animate-fade-up">
-            <p className="font-[family-name:var(--font-pixel)] text-lg">
-              <AnimatedGradientText>GAME OVER</AnimatedGradientText>
+            <p className="font-[family-name:var(--font-pixel)] text-lg text-foreground">
+              GAME OVER
             </p>
             <div className="text-center">
               <p className="text-sm text-muted">Final Score</p>
-              <p className="font-mono text-5xl font-bold text-neon-cyan glow-cyan">
+              <p className="font-mono text-5xl font-bold text-accent-primary">
                 {finalScore !== null
                   ? config.scoreType === "time"
                     ? formatTime(finalScore)

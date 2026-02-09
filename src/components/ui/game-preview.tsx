@@ -228,12 +228,12 @@ function SyntaxBreakerPreview({ color }: { color: string }) {
   return (
     <div className="flex flex-col gap-0.5 p-3 font-mono text-[9px]">
       <div className="text-gray-500">
-        <span style={{ color: "#00fff5" }}>function</span>{" "}
+        <span style={{ color: "#0891B2" }}>function</span>{" "}
         <span className="text-white">greet</span>() {"{"}
       </div>
       <div className="text-white">
         {"  "}
-        <span style={{ color: "#39ff14" }}>&quot;Hello&quot;</span>
+        <span style={{ color: "#16A34A" }}>&quot;Hello&quot;</span>
       </div>
       <div
         className="rounded px-1"
@@ -405,7 +405,7 @@ function FocusForestPreview({ color }: { color: string }) {
 }
 
 function NeonRhythmPreview({ color }: { color: string }) {
-  const lanes = ["#00fff5", color, "#39ff14", "#ffe600"];
+  const lanes = ["#0891B2", color, "#16A34A", "#CA8A04"];
   return (
     <div className="flex h-full items-end justify-center gap-1 p-2 pb-4" style={{ backgroundColor: "#0a0a1a" }}>
       {lanes.map((c, i) => (
@@ -523,7 +523,7 @@ function CommunityGridPreview({ color }: { color: string }) {
     0, 1, 0, 0, 0, 0, 1, 0,
     0, 0, 1, 1, 1, 1, 0, 0,
   ];
-  const colors = ["transparent", color, "#ff2d95", "#ffe600"];
+  const colors = ["transparent", color, "#DB2777", "#CA8A04"];
   return (
     <div className="grid grid-cols-8 gap-px p-2" style={{ backgroundColor: "#0a0a0f" }}>
       {pixels.map((p, i) => (

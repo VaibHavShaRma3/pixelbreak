@@ -35,7 +35,7 @@ export function ActivityTicker() {
   return (
     <div className="overflow-hidden border-b border-border bg-surface/50 backdrop-blur-sm">
       <div className="mx-auto flex h-8 max-w-7xl items-center justify-center gap-2 px-4">
-        <Zap className="h-3 w-3 shrink-0 text-neon-yellow" />
+        <Zap className="h-3 w-3 shrink-0 text-accent-yellow" />
         <div
           className="flex items-center gap-2 text-xs transition-all duration-300"
           style={{
@@ -43,14 +43,14 @@ export function ActivityTicker() {
             transform: isVisible ? "translateY(0)" : "translateY(-10px)",
           }}
         >
-          <span className="font-semibold text-neon-cyan">{activity.player}</span>
+          <span className="font-semibold text-accent-primary">{activity.player}</span>
           <span className="text-muted">scored</span>
-          <span className="font-bold text-neon-green">
+          <span className="font-bold text-accent-tertiary">
             {activity.score.toLocaleString()}
           </span>
           <span className="text-muted">on</span>
-          <span className="font-semibold text-neon-pink">{activity.game}</span>
-          <Trophy className="h-3 w-3 text-neon-yellow" />
+          <span className="font-semibold text-accent-secondary">{activity.game}</span>
+          <Trophy className="h-3 w-3 text-accent-yellow" />
           <span className="text-muted/60">{activity.time}</span>
         </div>
       </div>

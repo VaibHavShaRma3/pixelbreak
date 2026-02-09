@@ -117,7 +117,7 @@ export default function ProfilePage() {
     <div className="mx-auto max-w-5xl px-4 py-12">
       <Link
         href="/leaderboards"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-neon-cyan transition-colors"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent-primary transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Leaderboards
@@ -125,7 +125,7 @@ export default function ProfilePage() {
       {/* Profile Header */}
       <ScrollReveal direction="down">
         <div className="flex items-center gap-5">
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-surface-2 ring-2 ring-neon-cyan/30">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-surface-2 ring-2 ring-accent-primary/30">
             {user?.image ? (
               <img
                 src={user.image}
@@ -137,7 +137,7 @@ export default function ProfilePage() {
             )}
           </div>
           <div>
-            <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-neon-cyan glow-cyan">
+            <h1 className="text-2xl font-bold text-foreground">
               {user?.name || username}
             </h1>
             <p className="text-sm text-muted">@{username}</p>
@@ -159,29 +159,26 @@ export default function ProfilePage() {
             label: "Games Played",
             value: totalGamesPlayed,
             icon: Gamepad2,
-            color: "text-neon-cyan",
-            glowColor: "#00fff5",
+            glowColor: "#1D4ED8",
           },
           {
             label: "Total Score",
             value: totalScore,
             icon: Star,
-            color: "text-neon-yellow",
-            glowColor: "#ffe600",
+            glowColor: "#D97706",
           },
           {
             label: "Achievements",
             value: achievementsUnlocked,
             icon: Trophy,
-            color: "text-neon-green",
-            glowColor: "#39ff14",
+            glowColor: "#16A34A",
           },
         ].map((stat, i) => (
           <ScrollReveal key={stat.label} direction="up" delay={i * 120}>
             <TiltCard glowColor={stat.glowColor} className="text-center">
               <div className="flex flex-col items-center gap-2 py-4">
-                <stat.icon className={`h-7 w-7 ${stat.color}`} />
-                <p className="font-[family-name:var(--font-pixel)] text-2xl text-foreground">
+                <stat.icon className="h-7 w-7 text-muted" />
+                <p className="text-2xl font-bold text-foreground">
                   <AnimatedCounter value={stat.value} duration={1500} />
                 </p>
                 <p className="text-sm text-muted">{stat.label}</p>
@@ -194,10 +191,10 @@ export default function ProfilePage() {
       {/* Recent Activity Placeholder */}
       <ScrollReveal direction="up" delay={100}>
         <div className="mt-12">
-          <h3 className="font-[family-name:var(--font-pixel)] text-lg text-foreground">
+          <h3 className="text-lg font-bold text-foreground">
             Recent Activity
           </h3>
-          <div className="mt-4 rounded-xl border border-border bg-surface p-8 text-center">
+          <div className="mt-4 rounded-2xl border border-border bg-surface p-8 shadow-sm text-center">
             <Gamepad2 className="mx-auto h-8 w-8 text-muted/30" />
             <p className="mt-2 text-sm text-muted">
               Activity feed coming soon. Play games to see your history here!
@@ -210,13 +207,13 @@ export default function ProfilePage() {
       {gameStats.length > 0 && (
         <ScrollReveal direction="up" delay={150}>
           <div className="mt-12">
-            <h3 className="font-[family-name:var(--font-pixel)] text-lg text-foreground">
+            <h3 className="text-lg font-bold text-foreground">
               Game Stats
             </h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {gameStats.map((stat, i) => (
                 <ScrollReveal key={stat.gameSlug} direction="up" delay={i * 80}>
-                  <TiltCard glowColor="#ff2d95" className="h-full">
+                  <TiltCard glowColor="#DC2626" className="h-full">
                     <h4 className="font-semibold text-foreground">
                       {formatGameName(stat.gameSlug)}
                     </h4>
@@ -229,7 +226,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted">High Score</span>
-                        <span className="font-mono text-neon-cyan">
+                        <span className="font-mono text-accent-primary">
                           {stat.highScore.toLocaleString()}
                         </span>
                       </div>

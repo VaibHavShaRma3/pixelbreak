@@ -3,11 +3,11 @@ import { Gamepad2, Github } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-t border-border bg-surface-2">
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
-            <Gamepad2 className="h-5 w-5 text-neon-cyan" />
+            <Gamepad2 className="h-5 w-5 text-accent-pixel" />
             <span className="font-[family-name:var(--font-pixel)] text-xs text-muted">
               PixelBreak
             </span>

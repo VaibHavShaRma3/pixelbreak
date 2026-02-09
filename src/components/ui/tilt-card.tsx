@@ -9,75 +9,30 @@ interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function TiltCard({
-  glowColor = "#00fff5",
+  glowColor = "#1D4ED8",
   children,
   className,
   ...props
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState("");
-  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-
-    setTransform(
-      `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`
-    );
-    setGlowPos({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setTransform("");
-    setIsHovered(false);
-  };
 
   return (
     <div
       ref={cardRef}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-border bg-surface p-6 transition-all duration-200",
+        "relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
         className
       )}
-      style={{
-        transform: transform || undefined,
-        transition: isHovered ? "transform 0.1s ease-out" : "transform 0.4s ease-out",
-      }}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => setIsHovered(false)}
       {...props}
     >
-      {/* Glow effect following cursor */}
+      {/* Subtle top border accent on hover */}
       {isHovered && (
         <div
-          className="pointer-events-none absolute inset-0 opacity-20 transition-opacity"
-          style={{
-            background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, ${glowColor}40, transparent 60%)`,
-          }}
-        />
-      )}
-      {/* Border glow */}
-      {isHovered && (
-        <div
-          className="pointer-events-none absolute inset-0 rounded-xl opacity-50"
-          style={{
-            boxShadow: `0 0 20px ${glowColor}30, inset 0 0 20px ${glowColor}10`,
-          }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-0.5 transition-opacity"
+          style={{ backgroundColor: glowColor }}
         />
       )}
       <div className="relative z-10">{children}</div>

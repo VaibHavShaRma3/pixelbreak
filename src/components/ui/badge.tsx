@@ -7,11 +7,11 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-neon-cyan/30 bg-neon-cyan/10 text-neon-cyan",
-        pink: "border-neon-pink/30 bg-neon-pink/10 text-neon-pink",
-        green: "border-neon-green/30 bg-neon-green/10 text-neon-green",
-        purple: "border-neon-purple/30 bg-neon-purple/10 text-neon-purple",
-        yellow: "border-neon-yellow/30 bg-neon-yellow/10 text-neon-yellow",
+        default: "border-accent-primary/30 bg-accent-primary/10 text-accent-primary",
+        secondary: "border-accent-secondary/30 bg-accent-secondary/10 text-accent-secondary",
+        success: "border-accent-tertiary/30 bg-accent-tertiary/10 text-accent-tertiary",
+        purple: "border-accent-purple/30 bg-accent-purple/10 text-accent-purple",
+        yellow: "border-accent-yellow/30 bg-accent-yellow/10 text-accent-yellow",
         outline: "border-border text-muted",
       },
     },

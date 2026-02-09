@@ -38,7 +38,7 @@ function renderMarkdown(content: string): React.ReactNode[] {
           key={`code-${i}`}
           className="my-4 overflow-x-auto rounded-lg border border-border bg-surface-2 p-4"
         >
-          <code className="text-sm text-neon-green">{codeLines.join("\n")}</code>
+          <code className="text-sm text-accent-tertiary">{codeLines.join("\n")}</code>
         </pre>
       );
       continue;
@@ -61,7 +61,7 @@ function renderMarkdown(content: string): React.ReactNode[] {
       nodes.push(
         <h1
           key={`h1-${i}`}
-          className="mb-4 mt-8 font-[family-name:var(--font-pixel)] text-2xl text-neon-cyan glow-cyan"
+          className="mb-4 mt-8 text-2xl font-bold text-foreground"
         >
           {inlineMarkdown(line.slice(2))}
         </h1>
@@ -74,7 +74,7 @@ function renderMarkdown(content: string): React.ReactNode[] {
       nodes.push(
         <h2
           key={`h2-${i}`}
-          className="mb-3 mt-6 font-[family-name:var(--font-pixel)] text-xl text-neon-pink"
+          className="mb-3 mt-6 text-xl font-bold text-foreground"
         >
           {inlineMarkdown(line.slice(3))}
         </h2>
@@ -87,7 +87,7 @@ function renderMarkdown(content: string): React.ReactNode[] {
       nodes.push(
         <h3
           key={`h3-${i}`}
-          className="mb-2 mt-4 font-semibold text-lg text-neon-green"
+          className="mb-2 mt-4 font-semibold text-lg text-foreground"
         >
           {inlineMarkdown(line.slice(4))}
         </h3>
@@ -161,7 +161,7 @@ function inlineMarkdown(text: string): React.ReactNode[] {
       parts.push(
         <code
           key={`c-${match.index}`}
-          className="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-neon-yellow"
+          className="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-accent-yellow"
         >
           {match[6]}
         </code>
@@ -257,7 +257,7 @@ export default function BlogPostPage() {
         </Link>
         <div className="mt-16 flex flex-col items-center gap-4">
           <BookOpen className="h-16 w-16 text-muted/30" />
-          <h1 className="font-[family-name:var(--font-pixel)] text-xl text-muted">
+          <h1 className="text-xl font-bold text-muted">
             Post not found
           </h1>
           <p className="text-sm text-muted">
@@ -282,7 +282,7 @@ export default function BlogPostPage() {
 
       {/* Title */}
       <ScrollReveal direction="up" delay={100}>
-        <h1 className="mt-8 font-[family-name:var(--font-pixel)] text-2xl leading-tight text-neon-cyan glow-cyan md:text-3xl">
+        <h1 className="mt-8 text-2xl font-bold leading-tight text-foreground md:text-3xl">
           {post.title}
         </h1>
       </ScrollReveal>
@@ -299,8 +299,8 @@ export default function BlogPostPage() {
               className="rounded-full"
             />
           ) : (
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neon-purple/20">
-              <User className="h-4 w-4 text-neon-purple" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-purple/20">
+              <User className="h-4 w-4 text-accent-purple" />
             </div>
           )}
           <span className="text-sm text-foreground">
@@ -316,7 +316,7 @@ export default function BlogPostPage() {
       {/* Cover Image */}
       {post.coverImage && (
         <ScrollReveal direction="up" delay={300}>
-          <div className="relative mt-8 h-64 overflow-hidden rounded-xl md:h-80">
+          <div className="relative mt-8 h-64 overflow-hidden rounded-2xl md:h-80">
             <Image
               src={post.coverImage}
               alt={post.title}
@@ -329,7 +329,7 @@ export default function BlogPostPage() {
 
       {/* Content */}
       <ScrollReveal direction="up" delay={post.coverImage ? 400 : 300}>
-        <article className="prose-invert mt-8 max-w-none">
+        <article className="mt-8 max-w-none">
           {renderMarkdown(post.content)}
         </article>
       </ScrollReveal>

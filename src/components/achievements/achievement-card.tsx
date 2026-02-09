@@ -10,27 +10,17 @@ interface AchievementCardProps {
 }
 
 export function AchievementCard({ achievement, unlocked, unlockedAt }: AchievementCardProps) {
-  const glowColor = achievement.gameSlug === null ? "#00fff5" : "#ff2d95";
+  const accentColor = achievement.gameSlug === null ? "#1D4ED8" : "#DC2626";
 
   return (
     <TiltCard
-      glowColor={unlocked ? glowColor : "#333"}
+      glowColor={unlocked ? accentColor : "#999"}
       className={`relative transition-all duration-300 ${
         unlocked
           ? "border-opacity-100"
           : "grayscale opacity-60 hover:opacity-80"
       }`}
     >
-      {/* Unlock glow ring */}
-      {unlocked && (
-        <div
-          className="pointer-events-none absolute -inset-px rounded-xl opacity-40"
-          style={{
-            boxShadow: `0 0 16px ${glowColor}40, 0 0 32px ${glowColor}20`,
-          }}
-        />
-      )}
-
       <div className="flex items-start gap-3">
         {/* Icon */}
         <div
@@ -38,7 +28,7 @@ export function AchievementCard({ achievement, unlocked, unlockedAt }: Achieveme
             unlocked ? "bg-surface-2" : "bg-surface-2/50"
           }`}
         >
-          {unlocked ? achievement.icon : "🔒"}
+          {unlocked ? achievement.icon : "\uD83D\uDD12"}
         </div>
 
         {/* Info */}
@@ -55,8 +45,8 @@ export function AchievementCard({ achievement, unlocked, unlockedAt }: Achieveme
             <span
               className="mt-1.5 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium"
               style={{
-                backgroundColor: unlocked ? `${glowColor}15` : "rgba(255,255,255,0.05)",
-                color: unlocked ? glowColor : "var(--muted)",
+                backgroundColor: unlocked ? `${accentColor}15` : "rgba(128,128,128,0.1)",
+                color: unlocked ? accentColor : "var(--muted)",
               }}
             >
               {achievement.gameSlug.replace(/-/g, " ")}
@@ -66,8 +56,8 @@ export function AchievementCard({ achievement, unlocked, unlockedAt }: Achieveme
             <span
               className="mt-1.5 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium"
               style={{
-                backgroundColor: unlocked ? `${glowColor}15` : "rgba(255,255,255,0.05)",
-                color: unlocked ? glowColor : "var(--muted)",
+                backgroundColor: unlocked ? `${accentColor}15` : "rgba(128,128,128,0.1)",
+                color: unlocked ? accentColor : "var(--muted)",
               }}
             >
               Global
