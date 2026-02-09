@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { useBubbleStore } from "./store";
 import type { GameState, GameCallbacks } from "@/types/game";
 
@@ -13,6 +13,7 @@ interface BubbleWrapProps {
 
 const GRID_SIZE = 10;
 const TOTAL = GRID_SIZE * GRID_SIZE;
+const GAME_DURATION = 30; // seconds
 
 export default function BubbleWrap({
   gameState,
@@ -22,12 +23,37 @@ export default function BubbleWrap({
 }: BubbleWrapProps) {
   const { popped, pop, reset } = useBubbleStore();
   const [popAnim, setPopAnim] = useState<number | null>(null);
+  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const scoreRef = useRef(score);
+  scoreRef.current = score;
+  const endedRef = useRef(false);
 
   useEffect(() => {
     if (gameState === "playing") {
       reset();
+      setTimeLeft(GAME_DURATION);
+      endedRef.current = false;
     }
   }, [gameState, reset]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (gameState !== "playing") return;
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          if (!endedRef.current) {
+            endedRef.current = true;
+            setTimeout(() => callbacks.onGameEnd(scoreRef.current), 100);
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [gameState, callbacks]);
 
   // When all bubbles popped, regenerate
   useEffect(() => {
@@ -50,7 +76,20 @@ export default function BubbleWrap({
   );
 
   return (
-    <div className="flex h-full items-center justify-center p-4">
+    <div className="flex h-full flex-col items-center justify-center gap-4 p-4">
+      {/* Timer */}
+      <div className="flex items-center gap-3">
+        <span
+          className="font-mono text-2xl font-bold"
+          style={{
+            color: timeLeft <= 5 ? "#ff2d95" : "#00fff5",
+            textShadow: timeLeft <= 5 ? "0 0 10px #ff2d95" : "none",
+          }}
+        >
+          {timeLeft}s
+        </span>
+        <span className="text-sm text-muted">Pop as many as you can!</span>
+      </div>
       <div
         className="grid gap-1"
         style={{

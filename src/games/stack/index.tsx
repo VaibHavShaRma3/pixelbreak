@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useCanvas } from "@/games/_shared/use-canvas";
 import { useGameLoop } from "@/games/_shared/use-game-loop";
 import { useStackStore } from "./store";
@@ -19,11 +19,19 @@ export default function Stack({
   setScore,
   callbacks,
 }: StackProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { canvasRef, getContext } = useCanvas({
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
   });
   const { engine, update, drop, reset } = useStackStore();
+
+  // Auto-focus container for keyboard input
+  useEffect(() => {
+    if (gameState === "playing") {
+      containerRef.current?.focus();
+    }
+  }, [gameState]);
 
   useEffect(() => {
     if (gameState === "playing") {
@@ -64,12 +72,16 @@ export default function Stack({
   }, [handleDrop]);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-4 p-4">
+    <div
+      ref={containerRef}
+      tabIndex={0}
+      className="flex h-full flex-col items-center justify-center gap-4 p-4 outline-none"
+    >
       <canvas
         ref={canvasRef}
         onClick={handleDrop}
         className="cursor-pointer rounded-lg border border-border"
-        style={{ width: CANVAS_WIDTH, height: CANVAS_HEIGHT }}
+        style={{ maxWidth: "100%", height: "auto", width: CANVAS_WIDTH }}
       />
       <p className="text-xs text-muted">
         Click or press Space to drop the block

@@ -42,13 +42,14 @@ export default function NeonRhythm({
     scoreRef.current = store.score;
   }, [store.score]);
 
-  // Reset on game start
+  // Reset on game start + auto-focus
   useEffect(() => {
     if (gameState === "playing") {
       store.reset();
       setScore(0);
       setSongPicking(true);
       songEndedRef.current = false;
+      containerRef.current?.focus();
     }
   }, [gameState, store.reset, setScore]);
 
@@ -203,7 +204,8 @@ export default function NeonRhythm({
   return (
     <div
       ref={containerRef}
-      className="relative flex h-full w-full items-center justify-center overflow-hidden select-none"
+      tabIndex={0}
+      className="relative flex h-full w-full items-center justify-center overflow-hidden select-none outline-none"
       style={{ background: "linear-gradient(180deg, #0a0a1a 0%, #12121a 100%)" }}
     >
       {/* Lanes */}

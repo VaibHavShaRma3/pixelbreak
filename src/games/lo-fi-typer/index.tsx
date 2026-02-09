@@ -4,6 +4,7 @@ import { useEffect, useCallback, useRef } from "react";
 import { useLoFiTyperStore } from "./store";
 import type { GameState, GameCallbacks } from "@/types/game";
 
+
 interface LoFiTyperProps {
   gameState: GameState;
   score: number;
@@ -41,6 +42,7 @@ export default function LoFiTyper({
     reset,
   } = useLoFiTyperStore();
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const scoreRef = useRef(score);
   scoreRef.current = score;
 
@@ -54,11 +56,12 @@ export default function LoFiTyper({
   });
   storeRef.current = { currentSentenceIndex, typedChars, combo };
 
-  // Reset on game start
+  // Reset on game start + auto-focus
   useEffect(() => {
     if (gameState === "playing") {
       reset();
       setScore(0);
+      containerRef.current?.focus();
     }
   }, [gameState, reset, setScore]);
 
@@ -113,7 +116,7 @@ export default function LoFiTyper({
   const isFinished = currentSentenceIndex >= TOTAL_SENTENCES;
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-8 p-4">
+    <div ref={containerRef} tabIndex={0} className="flex h-full flex-col items-center justify-center gap-8 p-4 outline-none">
       {/* Combo display */}
       <div className="text-center">
         <p className="text-sm text-text-secondary">Combo</p>

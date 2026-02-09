@@ -4,8 +4,8 @@ export const gameRegistry: GameConfig[] = [
   // ─── Phase 1: MVP Games ───
   {
     slug: "bubble-wrap",
-    title: "Infinite Bubble Wrap",
-    description: "Pop as many bubbles as you can! Each pop earns a point. Simple, satisfying, infinite.",
+    title: "Bubble Wrap Blitz",
+    description: "Pop as many bubbles as you can in 30 seconds! Each pop earns a point. Fast fingers win!",
     category: "chill",
     scoreType: "points",
     renderingMode: "dom",
@@ -13,14 +13,14 @@ export const gameRegistry: GameConfig[] = [
     color: "#00fff5",
     minPlayers: 1,
     maxPlayers: 1,
-    estimatedPlayTime: "1-3 min",
+    estimatedPlayTime: "30 sec",
     difficulty: "easy",
-    tags: ["relaxing", "clicker", "satisfying"],
+    tags: ["relaxing", "clicker", "satisfying", "timed"],
     howToPlay: [
       "Click or tap any bubble to pop it",
       "Each pop earns 1 point",
       "Pop all bubbles to regenerate a fresh grid",
-      "No time limit — just relax and pop!",
+      "You have 30 seconds — pop as many as you can!",
     ],
     enabled: true,
   },

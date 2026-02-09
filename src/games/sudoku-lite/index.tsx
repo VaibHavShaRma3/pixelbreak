@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSudokuStore } from "./store";
 import { useTimer } from "@/games/_shared/use-timer";
 import { getConflicts } from "./engine";
@@ -21,12 +21,17 @@ export default function SudokuLite({
 }: SudokuLiteProps) {
   const store = useSudokuStore();
   const timer = useTimer();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const storeRef = useRef(store);
+  storeRef.current = store;
 
+  // Auto-focus container for keyboard input
   useEffect(() => {
     if (gameState === "playing") {
       store.initPuzzle();
       timer.reset();
       timer.start();
+      containerRef.current?.focus();
     }
     if (gameState === "paused") {
       timer.stop();
@@ -46,28 +51,33 @@ export default function SudokuLite({
     }
   }, [store.isComplete, gameState, timer.time, callbacks]);
 
-  // Keyboard input
+  // Keyboard input — use ref to avoid re-registering on every cell change
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (store.selectedCell === null) return;
+      const s = storeRef.current;
+      if (s.selectedCell === null) return;
 
       if (e.key >= "1" && e.key <= "4") {
-        store.setCell(store.selectedCell, parseInt(e.key));
+        s.setCell(s.selectedCell, parseInt(e.key));
       } else if (e.key === "Backspace" || e.key === "Delete") {
-        store.setCell(store.selectedCell, null);
-      } else if (e.key === "ArrowUp" && store.selectedCell >= 4) {
-        store.selectCell(store.selectedCell - 4);
-      } else if (e.key === "ArrowDown" && store.selectedCell < 12) {
-        store.selectCell(store.selectedCell + 4);
-      } else if (e.key === "ArrowLeft" && store.selectedCell % 4 > 0) {
-        store.selectCell(store.selectedCell - 1);
-      } else if (e.key === "ArrowRight" && store.selectedCell % 4 < 3) {
-        store.selectCell(store.selectedCell + 1);
+        s.setCell(s.selectedCell, null);
+      } else if (e.key === "ArrowUp" && s.selectedCell >= 4) {
+        e.preventDefault();
+        s.selectCell(s.selectedCell - 4);
+      } else if (e.key === "ArrowDown" && s.selectedCell < 12) {
+        e.preventDefault();
+        s.selectCell(s.selectedCell + 4);
+      } else if (e.key === "ArrowLeft" && s.selectedCell % 4 > 0) {
+        e.preventDefault();
+        s.selectCell(s.selectedCell - 1);
+      } else if (e.key === "ArrowRight" && s.selectedCell % 4 < 3) {
+        e.preventDefault();
+        s.selectCell(s.selectedCell + 1);
       }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [store.selectedCell]);
+  }, []);
 
   const getConflictsForCell = (pos: number) => {
     const value = store.playerGrid[pos];
@@ -76,7 +86,7 @@ export default function SudokuLite({
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-6 p-8">
+    <div ref={containerRef} tabIndex={0} className="flex h-full flex-col items-center justify-center gap-6 p-8 outline-none">
       {/* Timer */}
       <div className="font-mono text-2xl text-neon-purple">
         {formatTime(timer.time)}
