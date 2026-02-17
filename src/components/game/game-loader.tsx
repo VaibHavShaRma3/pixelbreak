@@ -25,6 +25,21 @@ const gameComponents: Record<string, React.ComponentType<any>> = {
   "magnetic-poetry": dynamic(() => import("@/games/magnetic-poetry"), { ssr: false }),
   "community-grid": dynamic(() => import("@/games/community-grid"), { ssr: false }),
   velocity: dynamic(() => import("@/games/velocity"), { ssr: false }),
+  nerdle: dynamic(() => import("@/games/nerdle"), { ssr: false }),
+  connections: dynamic(() => import("@/games/connections"), { ssr: false }),
+  "lights-out": dynamic(() => import("@/games/lights-out"), { ssr: false }),
+  kenken: dynamic(() => import("@/games/kenken"), { ssr: false }),
+  "monty-hall": dynamic(() => import("@/games/monty-hall"), { ssr: false }),
+  "dice-trader": dynamic(() => import("@/games/dice-trader"), { ssr: false }),
+  "sequence-solver": dynamic(() => import("@/games/sequence-solver"), { ssr: false }),
+  "logic-grid": dynamic(() => import("@/games/logic-grid"), { ssr: false }),
+  nonogram: dynamic(() => import("@/games/nonogram"), { ssr: false }),
+  "memory-matrix": dynamic(() => import("@/games/memory-matrix"), { ssr: false }),
+  "cube-roll": dynamic(() => import("@/games/cube-roll"), { ssr: false }),
+  "marble-maze": dynamic(() => import("@/games/marble-maze"), { ssr: false }),
+  "tower-of-hanoi-3d": dynamic(() => import("@/games/tower-of-hanoi-3d"), { ssr: false }),
+  "sokoban-3d": dynamic(() => import("@/games/sokoban-3d"), { ssr: false }),
+  "orbit-architect": dynamic(() => import("@/games/orbit-architect"), { ssr: false }),
 };
 
 interface GameLoaderProps {

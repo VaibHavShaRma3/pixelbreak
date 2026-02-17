@@ -9,12 +9,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-accent-secondary text-white hover:bg-accent-secondary/90 shadow-sm",
-        green:
-          "bg-accent-tertiary text-white hover:bg-accent-tertiary/90 shadow-sm",
+          "bg-accent-primary text-white shadow-[0_0_15px_rgba(0,136,204,0.3)] hover:shadow-[0_0_25px_rgba(0,136,204,0.5)] hover:brightness-110 dark:text-[#0A0A0F] dark:shadow-[0_0_15px_rgba(0,255,245,0.3)] dark:hover:shadow-[0_0_25px_rgba(0,255,245,0.5)]",
+        neon:
+          "bg-accent-tertiary text-white shadow-[0_0_15px_rgba(0,153,51,0.3)] hover:shadow-[0_0_25px_rgba(0,153,51,0.5)] hover:brightness-110 dark:text-[#0A0A0F] dark:shadow-[0_0_15px_rgba(57,255,20,0.3)] dark:hover:shadow-[0_0_25px_rgba(57,255,20,0.5)]",
         outline:
-          "border border-border bg-transparent text-foreground hover:border-accent-primary hover:bg-surface-2",
-        ghost: "text-foreground hover:bg-surface-2",
+          "border border-border bg-transparent text-foreground hover:border-accent-primary hover:bg-accent-primary/10 hover:shadow-[0_0_10px_rgba(0,136,204,0.15)] dark:hover:shadow-[0_0_10px_rgba(0,255,245,0.15)]",
+        ghost:
+          "text-foreground hover:bg-accent-primary/10 hover:text-accent-primary",
         link: "text-accent-primary underline-offset-4 hover:underline",
       },
       size: {

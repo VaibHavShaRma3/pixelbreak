@@ -31,13 +31,31 @@ export function GamePreview({ slug, color }: GamePreviewProps) {
       {slug === "magnetic-poetry" && <MagneticPoetryPreview color={color} />}
       {slug === "community-grid" && <CommunityGridPreview color={color} />}
       {slug === "velocity" && <VelocityPreview color={color} />}
+      {slug === "nerdle" && <NerdlePreview color={color} />}
+      {slug === "connections" && <ConnectionsPreview color={color} />}
+      {slug === "lights-out" && <LightsOutPreview color={color} />}
+      {slug === "kenken" && <KenKenPreview color={color} />}
+      {slug === "monty-hall" && <MontyHallPreview color={color} />}
+      {slug === "dice-trader" && <DiceTraderPreview color={color} />}
+      {slug === "sequence-solver" && <SequenceSolverPreview color={color} />}
+      {slug === "logic-grid" && <LogicGridPreview color={color} />}
+      {slug === "nonogram" && <NonogramPreview color={color} />}
+      {slug === "memory-matrix" && <MemoryMatrixPreview color={color} />}
+      {slug === "cube-roll" && <CubeRollPreview color={color} />}
+      {slug === "marble-maze" && <MarbleMazePreview color={color} />}
+      {slug === "tower-of-hanoi-3d" && <TowerOfHanoiPreview color={color} />}
+      {slug === "sokoban-3d" && <SokobanPreview color={color} />}
+      {slug === "orbit-architect" && <OrbitArchitectPreview color={color} />}
       {![
         "bubble-wrap", "color-match", "stack", "sudoku-lite",
         "daily-pixel-puzzle", "lo-fi-typer", "falling-sand",
         "syntax-breaker", "constellation-hunter", "gacha-capsule",
         "zen-garden", "workspace-pet", "focus-forest", "neon-rhythm",
         "hexagon-land", "one-minute-barista", "magnetic-poetry", "community-grid",
-        "velocity",
+        "velocity", "nerdle", "connections", "lights-out", "kenken",
+        "monty-hall", "dice-trader", "sequence-solver", "logic-grid",
+        "nonogram", "memory-matrix", "cube-roll", "marble-maze",
+        "tower-of-hanoi-3d", "sokoban-3d", "orbit-architect",
       ].includes(slug) && (
         <Gamepad2 className="h-12 w-12" style={{ color }} />
       )}
@@ -600,6 +618,314 @@ function VelocityPreview({ color }: { color: string }) {
       >
         188
       </div>
+    </div>
+  );
+}
+
+function NerdlePreview({ color }: { color: string }) {
+  const rows = [
+    [
+      { ch: "1", s: "correct" }, { ch: "2", s: "wrong" }, { ch: "+", s: "absent" },
+      { ch: "3", s: "correct" }, { ch: "4", s: "present" }, { ch: "=", s: "correct" },
+      { ch: "4", s: "correct" }, { ch: "6", s: "wrong" },
+    ],
+    [
+      { ch: "1", s: "correct" }, { ch: "5", s: "absent" }, { ch: "+", s: "correct" },
+      { ch: "3", s: "correct" }, { ch: "1", s: "correct" }, { ch: "=", s: "correct" },
+      { ch: "4", s: "correct" }, { ch: "6", s: "correct" },
+    ],
+  ];
+  const colorMap: Record<string, string> = { correct: "#22c55e", present: "#eab308", absent: "#333", wrong: "#555" };
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 p-2">
+      {rows.map((row, r) => (
+        <div key={r} className="flex gap-0.5">
+          {row.map((cell, c) => (
+            <div key={c} className="flex h-5 w-5 items-center justify-center rounded-sm text-[8px] font-bold text-white"
+              style={{ backgroundColor: colorMap[cell.s] }}>{cell.ch}</div>
+          ))}
+        </div>
+      ))}
+      <div className="flex gap-0.5 mt-1">
+        {Array.from({ length: 8 }, (_, i) => (
+          <div key={i} className="h-5 w-5 rounded-sm border" style={{ borderColor: `${color}30` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ConnectionsPreview({ color }: { color: string }) {
+  const groups = [
+    { c: "#a78bfa", words: ["RUBY", "JAVA"] },
+    { c: color, words: ["MARS", "VENUS"] },
+    { c: "#4ade80", words: ["BASS", "DRUM"] },
+    { c: "#60a5fa", words: ["KING", "QUEEN"] },
+  ];
+  return (
+    <div className="grid grid-cols-4 gap-0.5 p-2">
+      {groups.flatMap((g) => g.words.map((w, i) => (
+        <div key={`${g.c}-${i}`} className="flex h-6 items-center justify-center rounded text-[7px] font-bold text-white"
+          style={{ backgroundColor: `${g.c}40`, border: `1px solid ${g.c}60` }}>{w}</div>
+      )))}
+    </div>
+  );
+}
+
+function LightsOutPreview({ color }: { color: string }) {
+  const [lit, setLit] = useState(new Set([2, 6, 7, 8, 10, 11, 12, 16, 18, 22]));
+  return (
+    <div className="grid grid-cols-5 gap-0.5 p-3">
+      {Array.from({ length: 25 }, (_, i) => (
+        <div key={i} className="aspect-square rounded-sm cursor-pointer transition-all duration-200"
+          style={{ backgroundColor: lit.has(i) ? color : `${color}15`, boxShadow: lit.has(i) ? `0 0 6px ${color}` : "none" }}
+          onMouseEnter={() => {
+            setLit((prev) => {
+              const next = new Set(prev);
+              const toggle = (idx: number) => { if (idx >= 0 && idx < 25) next.has(idx) ? next.delete(idx) : next.add(idx); };
+              toggle(i);
+              if (i % 5 > 0) toggle(i - 1);
+              if (i % 5 < 4) toggle(i + 1);
+              if (i >= 5) toggle(i - 5);
+              if (i < 20) toggle(i + 5);
+              return next;
+            });
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function KenKenPreview({ color }: { color: string }) {
+  const cells = [
+    { v: "3", cage: "6+" }, { v: "1", cage: "" }, { v: "4", cage: "3-" }, { v: "2", cage: "" },
+    { v: "1", cage: "5+" }, { v: "", cage: "" }, { v: "", cage: "2÷" }, { v: "", cage: "" },
+    { v: "", cage: "7+" }, { v: "", cage: "" }, { v: "", cage: "" }, { v: "", cage: "" },
+    { v: "", cage: "2-" }, { v: "", cage: "" }, { v: "", cage: "3" }, { v: "", cage: "" },
+  ];
+  return (
+    <div className="grid grid-cols-4 gap-px p-2">
+      {cells.map((c, i) => (
+        <div key={i} className="relative flex h-7 w-7 items-center justify-center border text-[9px] font-bold"
+          style={{ borderColor: `${color}30`, color: c.v ? color : `${color}40` }}>
+          {c.cage && <span className="absolute top-0 left-0.5 text-[6px] text-gray-400">{c.cage}</span>}
+          {c.v || "?"}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MontyHallPreview({ color }: { color: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-2 p-3">
+      <div className="flex gap-2">
+        {[1, 2, 3].map((d) => (
+          <div key={d} className="flex h-12 w-8 flex-col items-center justify-center rounded-t-lg border-2"
+            style={{ borderColor: d === 2 ? color : "#444", backgroundColor: d === 2 ? `${color}20` : "#1a1a2e" }}>
+            <span className="text-[8px] font-bold" style={{ color: d === 2 ? color : "#666" }}>#{d}</span>
+            {d === 1 && <span className="text-xs mt-0.5">🐐</span>}
+            {d === 2 && <span className="text-xs mt-0.5">?</span>}
+            {d === 3 && <span className="text-xs mt-0.5">?</span>}
+          </div>
+        ))}
+      </div>
+      <div className="text-[8px] font-bold" style={{ color }}>Switch or Stick?</div>
+    </div>
+  );
+}
+
+function DiceTraderPreview({ color }: { color: string }) {
+  const dice = [3, 5, 5, 2, 6];
+  return (
+    <div className="flex flex-col items-center justify-center gap-2 p-3">
+      <div className="flex gap-1">
+        {dice.map((d, i) => (
+          <div key={i} className="flex h-7 w-7 items-center justify-center rounded border text-[10px] font-bold"
+            style={{ borderColor: d === 5 ? color : "#444", backgroundColor: d === 5 ? `${color}20` : "#1a1a2e", color: d === 5 ? color : "#aaa" }}>
+            {d}
+          </div>
+        ))}
+      </div>
+      <div className="text-[7px] text-gray-400">Re-rolls: 2</div>
+      <div className="text-[9px] font-bold" style={{ color }}>Pair of 5s: +20</div>
+    </div>
+  );
+}
+
+function SequenceSolverPreview({ color }: { color: string }) {
+  const seq = [2, 4, 8, 16, "?"];
+  return (
+    <div className="flex flex-col items-center justify-center gap-2 p-3">
+      <div className="flex gap-1">
+        {seq.map((n, i) => (
+          <div key={i} className="flex h-7 w-7 items-center justify-center rounded text-[10px] font-bold"
+            style={{
+              backgroundColor: n === "?" ? `${color}20` : "#1a1a2e",
+              border: `1px solid ${n === "?" ? color : "#444"}`,
+              color: n === "?" ? color : "#aaa",
+            }}>
+            {n}
+          </div>
+        ))}
+      </div>
+      <div className="text-[7px] text-gray-400">Pattern: ×2</div>
+    </div>
+  );
+}
+
+function LogicGridPreview({ color }: { color: string }) {
+  const marks = ["✓", "✗", "", "✗", "", "✓", "", "✗", ""];
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 p-2">
+      <div className="grid grid-cols-3 gap-px">
+        {marks.map((m, i) => (
+          <div key={i} className="flex h-6 w-6 items-center justify-center border text-[8px] font-bold"
+            style={{
+              borderColor: `${color}30`,
+              color: m === "✓" ? "#4ade80" : m === "✗" ? "#f87171" : `${color}30`,
+              backgroundColor: m === "✓" ? "#4ade8015" : m === "✗" ? "#f8717115" : "transparent",
+            }}>
+            {m || "·"}
+          </div>
+        ))}
+      </div>
+      <div className="text-[7px] text-gray-400">3 categories × 3 items</div>
+    </div>
+  );
+}
+
+function NonogramPreview({ color }: { color: string }) {
+  const filled = [2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 16, 17, 18, 21, 22, 23];
+  return (
+    <div className="flex flex-col items-center justify-center p-2">
+      <div className="grid grid-cols-5 gap-px">
+        {Array.from({ length: 25 }, (_, i) => (
+          <div key={i} className="h-4 w-4 rounded-[1px]"
+            style={{ backgroundColor: filled.includes(i) ? color : `${color}10` }} />
+        ))}
+      </div>
+      <div className="mt-1 text-[7px] text-gray-400">5×5 grid</div>
+    </div>
+  );
+}
+
+function MemoryMatrixPreview({ color }: { color: string }) {
+  const highlighted = [0, 2, 5, 6, 8, 11, 13, 14];
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 p-2">
+      <div className="grid grid-cols-4 gap-0.5">
+        {Array.from({ length: 16 }, (_, i) => (
+          <div key={i} className="h-5 w-5 rounded-sm transition-all"
+            style={{
+              backgroundColor: highlighted.includes(i) ? color : `${color}10`,
+              boxShadow: highlighted.includes(i) ? `0 0 4px ${color}` : "none",
+            }} />
+        ))}
+      </div>
+      <div className="text-[7px] text-gray-400">Memorize!</div>
+    </div>
+  );
+}
+
+function CubeRollPreview({ color }: { color: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 p-3" style={{ perspective: "200px" }}>
+      <div style={{ transform: "rotateX(20deg) rotateY(-20deg)" }}>
+        <div className="h-8 w-8 rounded-sm border-2" style={{ borderColor: color, backgroundColor: `${color}30` }} />
+      </div>
+      <div className="mt-1 grid grid-cols-4 gap-0.5">
+        {Array.from({ length: 16 }, (_, i) => (
+          <div key={i} className="h-3 w-3 rounded-[1px]"
+            style={{ backgroundColor: i === 15 ? "#4ade80" : i === 0 ? color : `${color}10` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MarbleMazePreview({ color }: { color: string }) {
+  return (
+    <div className="relative flex h-full w-full items-center justify-center" style={{ backgroundColor: "#0a0a1a" }}>
+      <div className="h-16 w-16 rounded border" style={{ borderColor: `${color}40` }}>
+        <div className="relative h-full w-full p-1">
+          {/* Walls */}
+          <div className="absolute top-2 left-4 h-px w-6" style={{ backgroundColor: color }} />
+          <div className="absolute top-6 right-3 h-px w-5" style={{ backgroundColor: color }} />
+          <div className="absolute top-10 left-2 h-px w-4" style={{ backgroundColor: color }} />
+          {/* Marble */}
+          <div className="absolute top-1 left-1 h-2 w-2 rounded-full"
+            style={{ backgroundColor: color, boxShadow: `0 0 6px ${color}`, animation: "pulse 2s ease-in-out infinite" }} />
+          {/* Goal */}
+          <div className="absolute bottom-1 right-1 h-2 w-2 rounded-full" style={{ backgroundColor: "#4ade80", opacity: 0.8 }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TowerOfHanoiPreview({ color }: { color: string }) {
+  return (
+    <div className="flex items-end justify-center gap-3 p-3 pb-4">
+      {/* Peg 1 with disks */}
+      <div className="flex flex-col items-center gap-0.5">
+        <div className="h-10 w-px" style={{ backgroundColor: `${color}60` }} />
+        <div className="h-2 w-10 rounded-sm" style={{ backgroundColor: color, opacity: 0.9 }} />
+        <div className="h-2 w-8 rounded-sm -mt-0.5" style={{ backgroundColor: color, opacity: 0.7 }} />
+        <div className="h-2 w-6 rounded-sm -mt-0.5" style={{ backgroundColor: color, opacity: 0.5 }} />
+      </div>
+      {/* Peg 2 */}
+      <div className="flex flex-col items-center">
+        <div className="h-16 w-px" style={{ backgroundColor: `${color}60` }} />
+      </div>
+      {/* Peg 3 */}
+      <div className="flex flex-col items-center">
+        <div className="h-16 w-px" style={{ backgroundColor: `${color}60` }} />
+      </div>
+    </div>
+  );
+}
+
+function SokobanPreview({ color }: { color: string }) {
+  const grid = [
+    1, 1, 1, 1, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 2, 3, 1,
+    1, 0, 0, 4, 1,
+    1, 1, 1, 1, 1,
+  ]; // 0=floor, 1=wall, 2=crate, 3=goal, 4=player
+  const colors: Record<number, string> = { 0: "#111", 1: "#333", 2: color, 3: "#4ade80", 4: "#eab308" };
+  return (
+    <div className="flex flex-col items-center justify-center p-3">
+      <div className="grid grid-cols-5 gap-0.5">
+        {grid.map((c, i) => (
+          <div key={i} className="h-4 w-4 rounded-[1px]" style={{ backgroundColor: colors[c], opacity: c === 0 ? 0.3 : 0.9 }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function OrbitArchitectPreview({ color }: { color: string }) {
+  return (
+    <div className="relative flex h-full w-full items-center justify-center" style={{ backgroundColor: "#050510" }}>
+      {/* Star */}
+      <div className="h-4 w-4 rounded-full" style={{ backgroundColor: "#fbbf24", boxShadow: "0 0 12px #fbbf24" }} />
+      {/* Orbit rings */}
+      {[16, 24, 32].map((r, i) => (
+        <div key={i} className="absolute rounded-full border"
+          style={{ width: r * 2, height: r * 2, borderColor: `${color}20` }} />
+      ))}
+      {/* Planets */}
+      <div className="absolute h-2 w-2 rounded-full" style={{ top: "25%", right: "30%", backgroundColor: color, boxShadow: `0 0 4px ${color}` }} />
+      <div className="absolute h-1.5 w-1.5 rounded-full" style={{ bottom: "30%", left: "25%", backgroundColor: "#4ade80" }} />
+      <div className="absolute h-1 w-1 rounded-full" style={{ top: "45%", left: "20%", backgroundColor: "#f87171" }} />
+      {/* Small stars */}
+      {[10, 80, 90, 15, 70].map((x, i) => (
+        <div key={`s-${i}`} className="absolute h-0.5 w-0.5 rounded-full bg-white"
+          style={{ left: `${x}%`, top: `${(i * 23 + 10) % 85}%`, opacity: 0.3 }} />
+      ))}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Gamepad2, Github } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface-2">
+    <footer className="border-t border-border bg-surface-2 dark:border-accent-primary/10 dark:shadow-[0_-1px_20px_rgba(0,255,245,0.05)]">
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
@@ -14,13 +14,13 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-6 text-sm text-muted">
-            <Link href="/games" className="hover:text-foreground transition-colors">
+            <Link href="/games" className="hover:text-accent-primary transition-colors dark:hover:[text-shadow:0_0_8px_var(--accent-primary)]">
               Games
             </Link>
-            <Link href="/leaderboards" className="hover:text-foreground transition-colors">
+            <Link href="/leaderboards" className="hover:text-accent-primary transition-colors dark:hover:[text-shadow:0_0_8px_var(--accent-primary)]">
               Leaderboards
             </Link>
-            <Link href="/blog" className="hover:text-foreground transition-colors">
+            <Link href="/blog" className="hover:text-accent-primary transition-colors dark:hover:[text-shadow:0_0_8px_var(--accent-primary)]">
               Blog
             </Link>
           </div>
@@ -30,7 +30,7 @@ export function Footer() {
               href="https://github.com/VaibHavShaRma3/pixelbreak"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted hover:text-foreground transition-colors"
+              className="text-muted hover:text-accent-primary transition-colors"
             >
               <Github className="h-5 w-5" />
             </a>

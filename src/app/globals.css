@@ -10,35 +10,35 @@
 }
 
 :root {
-  --background: #F7F5F2;
-  --foreground: #1D1F27;
+  --background: #F0F0F5;
+  --foreground: #1A1A2E;
   --surface: #FFFFFF;
-  --surface-2: #EEECE9;
-  --surface-alt: #E8E5E0;
-  --border: #DDD8D0;
-  --muted: #71717A;
-  --accent-primary: #1D4ED8;
-  --accent-secondary: #DC2626;
-  --accent-tertiary: #16A34A;
-  --accent-purple: #7C3AED;
-  --accent-yellow: #D97706;
-  --accent-pixel: #F04F2C;
+  --surface-2: #E8E8F0;
+  --surface-alt: #DDDDE8;
+  --border: #C0C0D0;
+  --muted: #6B6B80;
+  --accent-primary: #0088CC;
+  --accent-secondary: #CC0055;
+  --accent-tertiary: #009933;
+  --accent-purple: #6B21A8;
+  --accent-yellow: #B8860B;
+  --accent-pixel: #CC4400;
 }
 
 .dark {
-  --background: #151519;
-  --foreground: #E8E5E0;
-  --surface: #1E1E24;
-  --surface-2: #27272F;
-  --surface-alt: #2F2F38;
-  --border: #3A3A44;
-  --muted: #9CA3AF;
-  --accent-primary: #60A5FA;
-  --accent-secondary: #F87171;
-  --accent-tertiary: #4ADE80;
-  --accent-purple: #A78BFA;
-  --accent-yellow: #FBBF24;
-  --accent-pixel: #F97316;
+  --background: #0A0A0F;
+  --foreground: #E0E0FF;
+  --surface: #12121A;
+  --surface-2: #1A1A28;
+  --surface-alt: #22222F;
+  --border: #2A2A3A;
+  --muted: #8888AA;
+  --accent-primary: #00FFF5;
+  --accent-secondary: #FF2D95;
+  --accent-tertiary: #39FF14;
+  --accent-purple: #B026FF;
+  --accent-yellow: #FFE600;
+  --accent-pixel: #FF6B2D;
 }
 
 @theme inline {
@@ -66,9 +66,97 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Subtle glow — dark mode only */
+/* Subtle glow — works in both modes, stronger in dark */
+.glow-subtle {
+  text-shadow: 0 0 6px currentColor;
+}
+
 .dark .glow-subtle {
-  text-shadow: 0 0 8px currentColor;
+  text-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+}
+
+/* Neon utility classes */
+.neon-glow {
+  box-shadow: 0 0 10px rgba(0, 136, 204, 0.2), 0 0 20px rgba(0, 136, 204, 0.1);
+}
+
+.dark .neon-glow {
+  box-shadow: 0 0 10px rgba(0, 255, 245, 0.3), 0 0 30px rgba(0, 255, 245, 0.15), 0 0 60px rgba(0, 255, 245, 0.05);
+}
+
+.neon-text {
+  text-shadow: 0 0 8px var(--accent-primary);
+}
+
+.dark .neon-text {
+  text-shadow: 0 0 10px var(--accent-primary), 0 0 30px var(--accent-primary), 0 0 60px rgba(0, 255, 245, 0.3);
+}
+
+.neon-border {
+  box-shadow: inset 0 0 4px rgba(0, 136, 204, 0.15), 0 0 4px rgba(0, 136, 204, 0.15);
+}
+
+.dark .neon-border {
+  box-shadow: inset 0 0 6px rgba(0, 255, 245, 0.1), 0 0 8px rgba(0, 255, 245, 0.2);
+  animation: border-glow 3s ease-in-out infinite;
+}
+
+.scanline {
+  display: none;
+}
+
+.dark .scanline {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 245, 0.015) 2px,
+    rgba(0, 255, 245, 0.015) 4px
+  );
+  animation: scanline 8s linear infinite;
+}
+
+/* Neon keyframes */
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  5% { opacity: 0.95; }
+  10% { opacity: 1; }
+  50% { opacity: 0.98; }
+  55% { opacity: 1; }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 255, 245, 0.2), 0 0 15px rgba(0, 255, 245, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(0, 255, 245, 0.4), 0 0 30px rgba(0, 255, 245, 0.2), 0 0 50px rgba(0, 255, 245, 0.1);
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    box-shadow: inset 0 0 6px rgba(0, 255, 245, 0.1), 0 0 8px rgba(0, 255, 245, 0.15);
+  }
+  33% {
+    box-shadow: inset 0 0 6px rgba(255, 45, 149, 0.1), 0 0 8px rgba(255, 45, 149, 0.15);
+  }
+  66% {
+    box-shadow: inset 0 0 6px rgba(176, 38, 255, 0.1), 0 0 8px rgba(176, 38, 255, 0.15);
+  }
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
 }
 
 /* Scrollbar styling */
@@ -86,7 +174,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--accent-primary);
 }
 
 /* Game canvas reset */
@@ -179,11 +267,12 @@ canvas {
 /* Navbar scroll */
 .navbar-scrolled {
   backdrop-filter: blur(16px);
-  background-color: rgba(247, 245, 242, 0.95);
+  background-color: rgba(240, 240, 245, 0.9);
 }
 
 .dark .navbar-scrolled {
-  background-color: rgba(21, 21, 25, 0.95);
+  background-color: rgba(10, 10, 15, 0.85);
+  border-bottom-color: rgba(0, 255, 245, 0.1);
 }
 
 /* Smooth page transitions */

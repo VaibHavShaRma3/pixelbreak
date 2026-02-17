@@ -9,7 +9,7 @@ interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function TiltCard({
-  glowColor = "#1D4ED8",
+  glowColor = "#0088CC",
   children,
   className,
   ...props
@@ -21,20 +21,19 @@ export function TiltCard({
     <div
       ref={cardRef}
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
+        "relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 dark:bg-surface/80 dark:backdrop-blur-sm",
         className
       )}
+      style={{
+        borderColor: isHovered ? `${glowColor}60` : undefined,
+        boxShadow: isHovered
+          ? `0 0 20px ${glowColor}30, 0 0 40px ${glowColor}10, 0 4px 16px rgba(0,0,0,0.1)`
+          : undefined,
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       {...props}
     >
-      {/* Subtle top border accent on hover */}
-      {isHovered && (
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-0.5 transition-opacity"
-          style={{ backgroundColor: glowColor }}
-        />
-      )}
       <div className="relative z-10">{children}</div>
     </div>
   );

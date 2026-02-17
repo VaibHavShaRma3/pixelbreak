@@ -81,8 +81,8 @@ export function GameShell({ config, children }: GameShellProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* HUD */}
-      <div className="flex items-center justify-between rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all">
+      {/* HUD with neon border */}
+      <div className="flex items-center justify-between rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all neon-border dark:bg-surface/80 dark:backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <h1
             className="font-[family-name:var(--font-pixel)] text-sm"
@@ -94,7 +94,7 @@ export function GameShell({ config, children }: GameShellProps) {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Score display with flash */}
+          {/* Score display with neon flash */}
           <div className="flex items-center gap-2">
             <Trophy className="h-4 w-4 text-accent-yellow" />
             <span
@@ -102,6 +102,7 @@ export function GameShell({ config, children }: GameShellProps) {
               style={{
                 color: scoreFlash ? config.color : "var(--foreground)",
                 transform: scoreFlash ? "scale(1.2)" : "scale(1)",
+                textShadow: scoreFlash ? `0 0 12px ${config.color}, 0 0 24px ${config.color}40` : "none",
               }}
             >
               {config.scoreType === "time"
@@ -133,12 +134,12 @@ export function GameShell({ config, children }: GameShellProps) {
       </div>
 
       {/* Game area */}
-      <div className="relative min-h-[500px] rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
+      <div className="relative min-h-[500px] rounded-2xl border border-border bg-surface shadow-sm overflow-hidden dark:bg-surface/80">
         {gameState === "idle" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 animate-fade-up">
             <Sparkles className="h-6 w-6 text-accent-yellow animate-pulse" />
             <h2
-              className="font-[family-name:var(--font-pixel)] text-xl"
+              className="font-[family-name:var(--font-pixel)] text-xl neon-text"
               style={{ color: config.color }}
             >
               {config.title}
@@ -153,7 +154,7 @@ export function GameShell({ config, children }: GameShellProps) {
 
             {/* How to Play instructions */}
             {config.howToPlay && config.howToPlay.length > 0 && (
-              <div className="w-full max-w-lg rounded-2xl border border-border bg-surface-2 p-5">
+              <div className="w-full max-w-lg rounded-2xl border border-border bg-surface-2 p-5 dark:bg-surface-2/80">
                 <div className="mb-3 flex items-center gap-2 text-base font-bold" style={{ color: config.color }}>
                   <BookOpen className="h-5 w-5" />
                   How to Play
@@ -195,7 +196,7 @@ export function GameShell({ config, children }: GameShellProps) {
             {gameState === "paused" && (
               <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-fade-up">
                 <div className="text-center">
-                  <p className="font-[family-name:var(--font-pixel)] text-lg text-accent-yellow">
+                  <p className="font-[family-name:var(--font-pixel)] text-lg text-accent-yellow neon-text" style={{ textShadow: "0 0 15px var(--accent-yellow), 0 0 30px var(--accent-yellow)" }}>
                     PAUSED
                   </p>
                   <Button className="mt-4" onClick={pauseGame}>
@@ -209,12 +210,15 @@ export function GameShell({ config, children }: GameShellProps) {
 
         {gameState === "gameover" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background/90 backdrop-blur-sm animate-fade-up">
-            <p className="font-[family-name:var(--font-pixel)] text-lg text-foreground">
+            <p className="font-[family-name:var(--font-pixel)] text-lg text-foreground neon-text">
               GAME OVER
             </p>
             <div className="text-center">
               <p className="text-sm text-muted">Final Score</p>
-              <p className="font-mono text-5xl font-bold text-accent-primary">
+              <p
+                className="font-mono text-5xl font-bold text-accent-primary"
+                style={{ textShadow: "0 0 20px var(--accent-primary), 0 0 40px var(--accent-primary)" }}
+              >
                 {finalScore !== null
                   ? config.scoreType === "time"
                     ? formatTime(finalScore)

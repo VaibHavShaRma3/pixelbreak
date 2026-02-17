@@ -17,7 +17,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4">
         <div className="flex flex-col items-center gap-8 py-32 text-center">
           <ScrollReveal direction="down" delay={0}>
-            <div className="inline-flex items-center gap-2 rounded-full bg-accent-pixel/10 px-4 py-1.5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent-pixel/30 bg-accent-pixel/10 px-4 py-1.5 dark:shadow-[0_0_15px_rgba(255,107,45,0.15)]">
               <Sparkles className="h-4 w-4 text-accent-pixel" />
               <span className="text-sm font-medium text-accent-pixel">
                 19 games. Zero installs.
@@ -26,7 +26,7 @@ export default function HomePage() {
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={150}>
-            <h1 className="font-[family-name:var(--font-pixel)] text-3xl leading-relaxed sm:text-5xl text-foreground">
+            <h1 className="font-[family-name:var(--font-pixel)] text-3xl leading-relaxed sm:text-5xl text-foreground neon-text">
               PixelBreak
             </h1>
           </ScrollReveal>
@@ -110,7 +110,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section — clean centered text */}
+      {/* Stats Section — neon glowing counters */}
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="grid gap-6 sm:grid-cols-3">
           {[
@@ -134,7 +134,7 @@ export default function HomePage() {
             <ScrollReveal key={stat.label} direction="up" delay={i * 150}>
               <div className="text-center py-6">
                 <stat.icon className="mx-auto h-8 w-8 text-muted mb-3" />
-                <p className="text-5xl font-black text-foreground">
+                <p className="text-5xl font-black text-foreground neon-text">
                   {stat.isText ? (
                     stat.value
                   ) : (
@@ -151,17 +151,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section — full-width band */}
-      <section className="bg-accent-secondary text-white py-16">
+      {/* CTA Section — neon gradient band */}
+      <section className="bg-gradient-to-r from-accent-primary via-accent-purple to-accent-primary text-white py-16 dark:shadow-[inset_0_0_60px_rgba(0,255,245,0.1)]">
         <div className="mx-auto max-w-7xl px-4 text-center">
           <ScrollReveal direction="up">
-            <h2 className="text-3xl font-bold">Ready to take a break?</h2>
+            <h2 className="text-3xl font-bold drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">Ready to take a break?</h2>
             <p className="mt-3 text-white/80 text-lg">
               Jump into any game instantly — no downloads, no signups required.
             </p>
             <Button
               size="lg"
-              className="mt-6 bg-white text-accent-secondary hover:bg-white/90 shadow-sm"
+              className="mt-6 bg-white text-accent-primary hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
               asChild
             >
               <Link href="/games">

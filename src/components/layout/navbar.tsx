@@ -36,10 +36,10 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
-        {/* Logo */}
+        {/* Logo with neon flicker */}
         <Link href="/" className="flex items-center gap-2 group">
-          <Gamepad2 className="h-6 w-6 text-accent-pixel transition-transform group-hover:rotate-12" />
-          <span className="font-[family-name:var(--font-pixel)] text-sm text-accent-pixel">
+          <Gamepad2 className="h-6 w-6 text-accent-pixel transition-transform group-hover:rotate-12 dark:animate-[neon-flicker_3s_infinite]" />
+          <span className="font-[family-name:var(--font-pixel)] text-sm text-accent-pixel dark:drop-shadow-[0_0_8px_var(--accent-pixel)]">
             PixelBreak
           </span>
         </Link>
@@ -56,15 +56,15 @@ export function Navbar() {
                 className={cn(
                   "relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all duration-200",
                   active
-                    ? "bg-surface-2 text-accent-primary font-medium"
+                    ? "bg-surface-2 text-accent-primary font-medium dark:[text-shadow:0_0_10px_var(--accent-primary)]"
                     : "text-muted hover:bg-surface-2 hover:text-foreground"
                 )}
               >
                 <Icon className="h-4 w-4" />
                 {link.label}
-                {/* Active solid indicator */}
+                {/* Active indicator with neon glow */}
                 {active && (
-                  <span className="absolute -bottom-[13px] left-1/2 h-[2px] w-8 -translate-x-1/2 bg-accent-primary rounded-full" />
+                  <span className="absolute -bottom-[13px] left-1/2 h-[2px] w-8 -translate-x-1/2 bg-accent-primary rounded-full dark:shadow-[0_0_8px_var(--accent-primary),0_0_16px_var(--accent-primary)]" />
                 )}
               </Link>
             );
@@ -103,9 +103,9 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — dark glass background */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background px-4 pb-4 md:hidden animate-fade-up">
+        <div className="border-t border-border bg-background/95 backdrop-blur-md dark:bg-[#0A0A0F]/90 dark:backdrop-blur-lg px-4 pb-4 md:hidden animate-fade-up">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (

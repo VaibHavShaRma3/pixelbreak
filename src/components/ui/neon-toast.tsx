@@ -51,10 +51,17 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   };
 
   const borderColors: Record<ToastType, string> = {
-    success: "#16A34A",
-    error: "#DC2626",
-    score: "#D97706",
-    achievement: "#7C3AED",
+    success: "var(--accent-tertiary)",
+    error: "var(--accent-secondary)",
+    score: "var(--accent-yellow)",
+    achievement: "var(--accent-purple)",
+  };
+
+  const glowColors: Record<ToastType, string> = {
+    success: "rgba(57, 255, 20, 0.15)",
+    error: "rgba(255, 45, 149, 0.15)",
+    score: "rgba(255, 230, 0, 0.15)",
+    achievement: "rgba(176, 38, 255, 0.15)",
   };
 
   return (
@@ -65,12 +72,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={toast.id}
             className={cn(
-              "flex items-start gap-3 rounded-xl border border-border bg-surface px-4 py-3 shadow-lg animate-in slide-in-from-right duration-300",
+              "flex items-start gap-3 rounded-xl border border-border bg-surface px-4 py-3 shadow-lg animate-in slide-in-from-right duration-300 dark:bg-surface/90 dark:backdrop-blur-sm",
               "min-w-[280px] max-w-[360px]"
             )}
             style={{
               borderLeftWidth: "4px",
               borderLeftColor: borderColors[toast.type],
+              boxShadow: `0 4px 20px rgba(0,0,0,0.15), 0 0 15px ${glowColors[toast.type]}`,
               animation: "toast-in 0.3s ease-out",
             }}
           >
